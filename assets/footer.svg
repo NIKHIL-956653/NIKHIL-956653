@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 230" width="1200" height="230" role="img" aria-label="Nikhil — Building AI that holds up in production.">
+<defs>
+<linearGradient id="foot-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0C1527"/><stop offset="1" stop-color="#070B14"/></linearGradient>
+<radialGradient id="foot-glow" cx="0.1" cy="0.9" r="0.75"><stop offset="0" stop-color="#22D3EE" stop-opacity=".17"/><stop offset=".45" stop-color="#22D3EE" stop-opacity=".04"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+<pattern id="foot-grid" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#2B4166" opacity=".5"/></pattern>
+<linearGradient id="foot-rule" gradientUnits="userSpaceOnUse" x1="40" y1="0" x2="1160" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset=".55" stop-color="#2B4166"/><stop offset="1" stop-color="#2B4166" stop-opacity="0"/></linearGradient>
+<linearGradient id="foot-sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".95"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+<radialGradient id="foot-dot"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#67E8F9" stop-opacity=".7"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="230" rx="24" fill="url(#foot-bg)"/>
+<rect width="1200" height="230" rx="24" fill="url(#foot-grid)"/>
+<rect width="1200" height="230" rx="24" fill="url(#foot-glow)"/>
+<rect x=".5" y=".5" width="1199" height="229" rx="23.5" fill="none" stroke="#1E2E4A"/>
+<style>
+.foot-serif{font-family:Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif}.foot-sans{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif}.foot-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
+.foot-in{animation:foot-in 1s cubic-bezier(.16,1,.3,1) both}
+.foot-d1{animation-delay:.12s}.foot-d2{animation-delay:.24s}.foot-d3{animation-delay:.36s}.foot-d4{animation-delay:.48s}.foot-d5{animation-delay:.6s}.foot-d6{animation-delay:.72s}.foot-d7{animation-delay:.84s}.foot-d8{animation-delay:.96s}
+.foot-draw{stroke-dasharray:1400;animation:foot-draw 1.6s cubic-bezier(.65,0,.35,1) .4s both}
+@keyframes foot-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes foot-draw{from{stroke-dashoffset:1400}to{stroke-dashoffset:0}}
+.foot-band{animation:foot-band 7s cubic-bezier(.4,0,.6,1) 1.4s infinite}
+@keyframes foot-band{0%{transform:translateX(0)}40%{transform:translateX(1600px)}100%{transform:translateX(1600px)}}
+@media (prefers-reduced-motion:reduce){.foot-in,.foot-draw,.foot-band{animation:none}}
+</style>
+<g class="foot-in"><text class="foot-serif" x="56" y="150" font-size="112" font-weight="300" letter-spacing="-4" fill="#EAF2FF">Nikhil<tspan fill="#22D3EE">.</tspan></text></g>
+<g class="foot-in foot-d2"><text class="foot-serif" x="1144" y="118" text-anchor="end" font-size="27" fill="#EAF2FF"><tspan font-style="italic" fill="#67E8F9">Building AI that holds up in production.</tspan></text><clipPath id="foot-sc2"><text class="foot-serif" x="1144" y="118" text-anchor="end" font-size="27"><tspan font-style="italic">Building AI that holds up in production.</tspan></text></clipPath><g clip-path="url(#foot-sc2)"><rect class="foot-band" x="-360" y="0" width="360" height="100%" fill="url(#foot-sheen)"/></g><text class="foot-mono " x="1144" y="150" font-size="11" letter-spacing="2.6" fill="#5F7394" text-anchor="end">GITHUB.COM/NIKHIL-956653 · DUBAI, UAE</text></g>
+<path class="foot-draw" d="M56 192 H1144" stroke="url(#foot-rule)" stroke-width="1"/><circle cx="56" cy="192" r="7" fill="url(#foot-dot)" opacity="0"><animate attributeName="cx" values="56;1144" dur="6s" begin="2.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".45 0 .55 1"/><animate attributeName="opacity" values="0;1;0" keyTimes="0;.15;1" dur="6s" begin="2.2s" repeatCount="indefinite"/></circle>
+</svg>

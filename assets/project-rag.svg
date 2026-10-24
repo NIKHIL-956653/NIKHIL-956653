@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" width="1200" height="380" role="img" aria-label="Enterprise RAG Pipeline: a fully local hybrid retrieval system over an 18-subject curriculum of about 6,800 pages and 20K chunks. BM25 plus dense retrieval merged by RRF, parent-child chunking, contextual retrieval, cross-encoder reranking from top-50 to top-5, per-chunk ACL metadata and RAGAS evaluation. Qdrant, Ollama, nomic-embed, BGE reranker, RAGAS, Streamlit.">
+<defs>
+<linearGradient id="pj-rag-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0C1527"/><stop offset="1" stop-color="#070B14"/></linearGradient>
+<radialGradient id="pj-rag-glow" cx="0.72" cy="0.5" r="0.75"><stop offset="0" stop-color="#22D3EE" stop-opacity=".17"/><stop offset=".45" stop-color="#22D3EE" stop-opacity=".04"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+<pattern id="pj-rag-grid" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#2B4166" opacity=".5"/></pattern>
+<linearGradient id="pj-rag-rule" gradientUnits="userSpaceOnUse" x1="40" y1="0" x2="1160" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset=".55" stop-color="#2B4166"/><stop offset="1" stop-color="#2B4166" stop-opacity="0"/></linearGradient>
+<linearGradient id="pj-rag-sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".95"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+<radialGradient id="pj-rag-dot"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#67E8F9" stop-opacity=".7"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="380" rx="24" fill="url(#pj-rag-bg)"/>
+<rect width="1200" height="380" rx="24" fill="url(#pj-rag-grid)"/>
+<rect width="1200" height="380" rx="24" fill="url(#pj-rag-glow)"/>
+<rect x=".5" y=".5" width="1199" height="379" rx="23.5" fill="none" stroke="#1E2E4A"/>
+<style>
+.pj-rag-serif{font-family:Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif}.pj-rag-sans{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif}.pj-rag-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
+.pj-rag-in{animation:pj-rag-in 1s cubic-bezier(.16,1,.3,1) both}
+.pj-rag-d1{animation-delay:.12s}.pj-rag-d2{animation-delay:.24s}.pj-rag-d3{animation-delay:.36s}.pj-rag-d4{animation-delay:.48s}.pj-rag-d5{animation-delay:.6s}.pj-rag-d6{animation-delay:.72s}.pj-rag-d7{animation-delay:.84s}.pj-rag-d8{animation-delay:.96s}
+.pj-rag-draw{stroke-dasharray:1400;animation:pj-rag-draw 1.6s cubic-bezier(.65,0,.35,1) .4s both}
+@keyframes pj-rag-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pj-rag-draw{from{stroke-dashoffset:1400}to{stroke-dashoffset:0}}
+.pj-rag-band{animation:pj-rag-band 7s cubic-bezier(.4,0,.6,1) 1.4s infinite}
+@keyframes pj-rag-band{0%{transform:translateX(0)}40%{transform:translateX(1600px)}100%{transform:translateX(1600px)}}
+@media (prefers-reduced-motion:reduce){.pj-rag-in,.pj-rag-draw,.pj-rag-band{animation:none}}
+.pj-rag-tick{animation:pj-rag-tick .5s ease-out both}@keyframes pj-rag-tick{from{stroke-dashoffset:20}to{stroke-dashoffset:0}}.pj-rag-bar{transform-box:fill-box;transform-origin:center;animation:pj-rag-bar .7s cubic-bezier(.16,1,.3,1) both}@keyframes pj-rag-bar{from{transform:scaleX(0)}to{transform:none}}@media (prefers-reduced-motion:reduce){.pj-rag-tick,.pj-rag-bar{animation:none}}</style>
+<path d="M28 .5 H560" stroke="#22D3EE" stroke-opacity=".6" stroke-width="2"/>
+<path d="M740 52 V330" stroke="#1E2E4A"/>
+<g class="pj-rag-in"><text class="pj-rag-mono " x="56" y="62" font-size="11" letter-spacing="3" fill="#22D3EE" text-anchor="start">04 · ENTERPRISE RAG · FULLY LOCAL · 2026</text></g>
+<g class="pj-rag-in pj-rag-d1"><text class="pj-rag-serif" x="56" y="112" font-size="46" font-weight="300" letter-spacing="-1" fill="#EAF2FF">Enterprise RAG Pipeline</text></g>
+<g class="pj-rag-in pj-rag-d2">
+<text class="pj-rag-sans" x="56" y="148" font-size="17.5" fill="#93A6C4">Hybrid retrieval over an 18-subject curriculum —</text>
+<text class="pj-rag-sans" x="56" y="172" font-size="17.5" fill="#93A6C4">the patterns that matter at scale, with no external APIs.</text>
+</g>
+<g class="pj-rag-in pj-rag-d3">
+<text class="pj-rag-sans" x="56" y="206" font-size="13" fill="#C6F7FF"><tspan fill="#22D3EE" font-weight="600">BUILT ›</tspan> BM25 + dense merged by RRF · parent-child chunking · contextual retrieval</text>
+<text class="pj-rag-sans" x="56" y="225" font-size="13" fill="#C6F7FF">cross-encoder rerank top-50 → top-5 · per-chunk ACL metadata · RAGAS evaluation</text>
+</g>
+<g class="pj-rag-in pj-rag-d4">
+<text class="pj-rag-serif" x="56" y="290" font-size="40" font-weight="300" letter-spacing="-1" fill="#EAF2FF">~6,800</text>
+<text class="pj-rag-sans" x="56" y="312" font-size="12.5" fill="#93A6C4">pages ingested</text>
+<text class="pj-rag-serif" x="232" y="290" font-size="40" font-weight="300" letter-spacing="-1" fill="#EAF2FF">~20K</text>
+<text class="pj-rag-sans" x="232" y="312" font-size="12.5" fill="#93A6C4">chunks indexed</text>
+<text class="pj-rag-serif" x="408" y="290" font-size="40" font-weight="300" letter-spacing="-1" fill="#EAF2FF">50 → 5</text>
+<text class="pj-rag-sans" x="408" y="312" font-size="12.5" fill="#93A6C4">rerank funnel</text>
+</g>
+<g class="pj-rag-in pj-rag-d5">
+<g><rect x="56" y="334" width="68" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-rag-sans" x="90.0" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">Qdrant</text></g>
+<g><rect x="132" y="334" width="68" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-rag-sans" x="166.0" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">Ollama</text></g>
+<g><rect x="208" y="334" width="103" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-rag-sans" x="259.5" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">nomic-embed</text></g>
+<g><rect x="319" y="334" width="110" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-rag-sans" x="374.0" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">BGE reranker</text></g>
+<g><rect x="437" y="334" width="61" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-rag-sans" x="467.5" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">RAGAS</text></g>
+<g><rect x="506" y="334" width="89" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-rag-sans" x="550.5" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">Streamlit</text></g>
+</g>
+<g class="pj-rag-in pj-rag-d3"><text class="pj-rag-mono " x="800" y="78" font-size="10.5" letter-spacing="2.6" fill="#22D3EE" text-anchor="start">RETRIEVAL FUNNEL · FULLY LOCAL</text><rect class="pj-rag-bar" style="animation-delay:0.4s" x="800" y="96" width="352" height="30" rx="8" fill="#22D3EE" fill-opacity="0.30" stroke="#22D3EE" stroke-opacity=".35"/><text class="pj-rag-mono" x="976" y="115.5" text-anchor="middle" font-size="11.5" fill="#EAF2FF">query → multi-query variants</text><rect class="pj-rag-bar" style="animation-delay:0.6s" x="818" y="136" width="316" height="30" rx="8" fill="#22D3EE" fill-opacity="0.44" stroke="#22D3EE" stroke-opacity=".35"/><text class="pj-rag-mono" x="976" y="155.5" text-anchor="middle" font-size="11.5" fill="#EAF2FF">hybrid: dense + BM25 (Qdrant)</text><rect class="pj-rag-bar" style="animation-delay:0.8s" x="836" y="176" width="280" height="30" rx="8" fill="#22D3EE" fill-opacity="0.58" stroke="#22D3EE" stroke-opacity=".35"/><text class="pj-rag-mono" x="976" y="195.5" text-anchor="middle" font-size="11.5" fill="#EAF2FF">RRF merge → top-50</text><rect class="pj-rag-bar" style="animation-delay:1.0s" x="852" y="216" width="248" height="30" rx="8" fill="#22D3EE" fill-opacity="0.72" stroke="#22D3EE" stroke-opacity=".35"/><text class="pj-rag-mono" x="976" y="235.5" text-anchor="middle" font-size="11.5" fill="#EAF2FF">cross-encoder rerank → top-5</text><rect class="pj-rag-bar" style="animation-delay:1.2s" x="865" y="256" width="222" height="30" rx="8" fill="#22D3EE" fill-opacity="0.86" stroke="#22D3EE" stroke-opacity=".35"/><text class="pj-rag-mono" x="976" y="275.5" text-anchor="middle" font-size="11.5" fill="#EAF2FF">parent expand → cited answer</text><text class="pj-rag-sans" x="800" y="314" font-size="12" fill="#5F7394">the same pipeline from this laptop to a sharded cluster —</text><text class="pj-rag-sans" x="800" y="331" font-size="12" fill="#5F7394">only the infrastructure changes</text></g>
+</svg>

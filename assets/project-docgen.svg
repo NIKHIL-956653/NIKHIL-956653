@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" width="1200" height="380" role="img" aria-label="GenAI Document Writing Assistant: turns a Jira ticket into a published Google Doc or Confluence page using Gemini via OpenRouter or a local Ollama model. 6 YAML document templates, faithfulness and completeness evaluation with an LLM judge, HMAC-verified Jira webhook, in-place updates. 368 offline tests, 95% coverage gate, 6 document types. Python, FastAPI, Jira REST, Google Docs API, Ollama, Docker.">
+<defs>
+<linearGradient id="pj-docgen-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0C1527"/><stop offset="1" stop-color="#070B14"/></linearGradient>
+<radialGradient id="pj-docgen-glow" cx="0.72" cy="0.5" r="0.75"><stop offset="0" stop-color="#22D3EE" stop-opacity=".17"/><stop offset=".45" stop-color="#22D3EE" stop-opacity=".04"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+<pattern id="pj-docgen-grid" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#2B4166" opacity=".5"/></pattern>
+<linearGradient id="pj-docgen-rule" gradientUnits="userSpaceOnUse" x1="40" y1="0" x2="1160" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset=".55" stop-color="#2B4166"/><stop offset="1" stop-color="#2B4166" stop-opacity="0"/></linearGradient>
+<linearGradient id="pj-docgen-sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".95"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+<radialGradient id="pj-docgen-dot"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#67E8F9" stop-opacity=".7"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="380" rx="24" fill="url(#pj-docgen-bg)"/>
+<rect width="1200" height="380" rx="24" fill="url(#pj-docgen-grid)"/>
+<rect width="1200" height="380" rx="24" fill="url(#pj-docgen-glow)"/>
+<rect x=".5" y=".5" width="1199" height="379" rx="23.5" fill="none" stroke="#1E2E4A"/>
+<style>
+.pj-docgen-serif{font-family:Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif}.pj-docgen-sans{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif}.pj-docgen-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
+.pj-docgen-in{animation:pj-docgen-in 1s cubic-bezier(.16,1,.3,1) both}
+.pj-docgen-d1{animation-delay:.12s}.pj-docgen-d2{animation-delay:.24s}.pj-docgen-d3{animation-delay:.36s}.pj-docgen-d4{animation-delay:.48s}.pj-docgen-d5{animation-delay:.6s}.pj-docgen-d6{animation-delay:.72s}.pj-docgen-d7{animation-delay:.84s}.pj-docgen-d8{animation-delay:.96s}
+.pj-docgen-draw{stroke-dasharray:1400;animation:pj-docgen-draw 1.6s cubic-bezier(.65,0,.35,1) .4s both}
+@keyframes pj-docgen-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pj-docgen-draw{from{stroke-dashoffset:1400}to{stroke-dashoffset:0}}
+.pj-docgen-band{animation:pj-docgen-band 7s cubic-bezier(.4,0,.6,1) 1.4s infinite}
+@keyframes pj-docgen-band{0%{transform:translateX(0)}40%{transform:translateX(1600px)}100%{transform:translateX(1600px)}}
+@media (prefers-reduced-motion:reduce){.pj-docgen-in,.pj-docgen-draw,.pj-docgen-band{animation:none}}
+.pj-docgen-tick{animation:pj-docgen-tick .5s ease-out both}@keyframes pj-docgen-tick{from{stroke-dashoffset:20}to{stroke-dashoffset:0}}.pj-docgen-bar{transform-box:fill-box;transform-origin:center;animation:pj-docgen-bar .7s cubic-bezier(.16,1,.3,1) both}@keyframes pj-docgen-bar{from{transform:scaleX(0)}to{transform:none}}@media (prefers-reduced-motion:reduce){.pj-docgen-tick,.pj-docgen-bar{animation:none}}</style>
+<path d="M28 .5 H560" stroke="#22D3EE" stroke-opacity=".6" stroke-width="2"/>
+<path d="M740 52 V330" stroke="#1E2E4A"/>
+<g class="pj-docgen-in"><text class="pj-docgen-mono " x="56" y="62" font-size="11" letter-spacing="3" fill="#22D3EE" text-anchor="start">02 · GENAI · DOCUMENT AUTOMATION · 2026</text></g>
+<g class="pj-docgen-in pj-docgen-d1"><text class="pj-docgen-serif" x="56" y="112" font-size="46" font-weight="300" letter-spacing="-1" fill="#EAF2FF">Document Writing Assistant</text></g>
+<g class="pj-docgen-in pj-docgen-d2">
+<text class="pj-docgen-sans" x="56" y="148" font-size="17.5" fill="#93A6C4">Jira ticket → LLM → a published Google Doc or Confluence page,</text>
+<text class="pj-docgen-sans" x="56" y="172" font-size="17.5" fill="#93A6C4">with an evaluation gate in CI.</text>
+</g>
+<g class="pj-docgen-in pj-docgen-d3">
+<text class="pj-docgen-sans" x="56" y="206" font-size="13" fill="#C6F7FF"><tspan fill="#22D3EE" font-weight="600">BUILT ›</tspan> 6 YAML document templates · faithfulness / completeness / structure scoring with an LLM judge</text>
+<text class="pj-docgen-sans" x="56" y="225" font-size="13" fill="#C6F7FF">HMAC-verified Jira webhook · in-place document updates with diffs · cloud or fully local LLM</text>
+</g>
+<g class="pj-docgen-in pj-docgen-d4">
+<text class="pj-docgen-serif" x="56" y="290" font-size="40" font-weight="300" letter-spacing="-1" fill="#EAF2FF">368</text>
+<text class="pj-docgen-sans" x="56" y="312" font-size="12.5" fill="#93A6C4">offline tests</text>
+<text class="pj-docgen-serif" x="232" y="290" font-size="40" font-weight="300" letter-spacing="-1" fill="#EAF2FF">95%</text>
+<text class="pj-docgen-sans" x="232" y="312" font-size="12.5" fill="#93A6C4">coverage gate in CI</text>
+<text class="pj-docgen-serif" x="408" y="290" font-size="40" font-weight="300" letter-spacing="-1" fill="#EAF2FF">6</text>
+<text class="pj-docgen-sans" x="408" y="312" font-size="12.5" fill="#93A6C4">document types</text>
+</g>
+<g class="pj-docgen-in pj-docgen-d5">
+<g><rect x="56" y="334" width="68" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-docgen-sans" x="90.0" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">Python</text></g>
+<g><rect x="132" y="334" width="75" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-docgen-sans" x="169.5" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">FastAPI</text></g>
+<g><rect x="215" y="334" width="89" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-docgen-sans" x="259.5" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">Jira REST</text></g>
+<g><rect x="312" y="334" width="131" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-docgen-sans" x="377.5" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">Google Docs API</text></g>
+<g><rect x="451" y="334" width="68" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-docgen-sans" x="485.0" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">Ollama</text></g>
+<g><rect x="527" y="334" width="68" height="28" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-docgen-sans" x="561.0" y="352.5" text-anchor="middle" font-size="12.5" fill="#C6F7FF">Docker</text></g>
+</g>
+<g class="pj-docgen-in pj-docgen-d3"><text class="pj-docgen-mono " x="800" y="78" font-size="10.5" letter-spacing="2.6" fill="#22D3EE" text-anchor="start">FETCH → GENERATE → SCORE → PUBLISH</text><rect x="800" y="118" width="92" height="64" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-docgen-serif" x="846" y="150" text-anchor="middle" font-size="22" fill="#EAF2FF">JIRA</text><text class="pj-docgen-sans" x="846" y="169" text-anchor="middle" font-size="9.5" fill="#93A6C4">ticket + context</text><path d="M892 150 H930" stroke="#2B4166" stroke-width="1.5"/><path d="M924 145 L931 150 L924 155" fill="none" stroke="#2B4166" stroke-width="1.5"/><rect x="930" y="118" width="92" height="64" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-docgen-serif" x="976" y="150" text-anchor="middle" font-size="22" fill="#EAF2FF">LLM</text><text class="pj-docgen-sans" x="976" y="169" text-anchor="middle" font-size="9.5" fill="#93A6C4">cloud · local</text><path d="M1022 150 H1060" stroke="#2B4166" stroke-width="1.5"/><path d="M1054 145 L1061 150 L1054 155" fill="none" stroke="#2B4166" stroke-width="1.5"/><rect x="1060" y="118" width="92" height="64" rx="14" fill="#122036" stroke="#2B4166"/><text class="pj-docgen-serif" x="1106" y="150" text-anchor="middle" font-size="22" fill="#EAF2FF">DOC</text><text class="pj-docgen-sans" x="1106" y="169" text-anchor="middle" font-size="9.5" fill="#93A6C4">Google Docs · Confluence</text><circle r="5" fill="url(#pj-docgen-dot)" opacity=".95"><animateMotion dur="4s" repeatCount="indefinite" path="M800 150 H1152" calcMode="spline" keyTimes="0;1" keySplines=".4 0 .6 1"/></circle><rect x="800" y="214" width="352" height="54" rx="12" fill="none" stroke="#2B4166" stroke-dasharray="4 5"/><text class="pj-docgen-mono " x="818" y="236" font-size="10" letter-spacing="2.4" fill="#67E8F9" text-anchor="start">EVAL GATE · CI</text><text class="pj-docgen-sans" x="818" y="256" font-size="12" fill="#93A6C4">faithfulness · completeness · structure, scored against the ticket</text><text class="pj-docgen-sans" x="800" y="300" font-size="12" fill="#5F7394">re-runs skip unchanged tickets; a changed ticket</text><text class="pj-docgen-sans" x="800" y="317" font-size="12" fill="#5F7394">updates the same document in place and logs the diff</text></g>
+</svg>

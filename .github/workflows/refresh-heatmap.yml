@@ -1,0 +1,47 @@
+name: Refresh contribution heatmap
+
+on:
+  schedule:
+    - cron: "17 1 * * *"   # daily, 01:17 UTC (05:17 Gulf Standard Time)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-heatmap
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Public calendar data only. If the fetch fails, the committed snapshot is kept
+      # and the heatmap is still re-rendered from it.
+      - name: Fetch contributions
+        env:
+          GH_USERNAME: ${{ github.repository_owner }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/fetch_contributions.py || echo "fetch failed; using committed snapshot"
+
+      - name: Render heatmap
+        run: python scripts/build_heatmap.py
+
+      # Commits are authored as the profile owner so the repo stays single-contributor.
+      - name: Commit if changed
+        run: |
+          git add data/contributions.json assets/contribution-heatmap.svg
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "Nikhil Chandra Sairam Tokala"
+          git config user.email "225577342+NIKHIL-956653@users.noreply.github.com"
+          git commit -m "chore: refresh contribution heatmap"
+          git push

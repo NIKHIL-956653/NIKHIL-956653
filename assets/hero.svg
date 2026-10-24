@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480" role="img" aria-label="Nikhil Chandra Sairam Tokala — Ai/Ml Engineer · Genai Engineer · Devops. Agents, retrieval and the plumbing that makes them a product. Dubai, Uae · Aws Certified ×2 · Pg Devops · Purdue × Edureka.">
+<defs>
+<linearGradient id="hero-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0C1527"/><stop offset="1" stop-color="#070B14"/></linearGradient>
+<radialGradient id="hero-glow" cx="0.8" cy="0.5" r="0.75"><stop offset="0" stop-color="#22D3EE" stop-opacity=".17"/><stop offset=".45" stop-color="#22D3EE" stop-opacity=".04"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+<pattern id="hero-grid" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#2B4166" opacity=".5"/></pattern>
+<linearGradient id="hero-rule" gradientUnits="userSpaceOnUse" x1="40" y1="0" x2="1160" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset=".55" stop-color="#2B4166"/><stop offset="1" stop-color="#2B4166" stop-opacity="0"/></linearGradient>
+<linearGradient id="hero-sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".95"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+<radialGradient id="hero-dot"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#67E8F9" stop-opacity=".7"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="480" rx="24" fill="url(#hero-bg)"/>
+<rect width="1200" height="480" rx="24" fill="url(#hero-grid)"/>
+<rect width="1200" height="480" rx="24" fill="url(#hero-glow)"/>
+<rect x=".5" y=".5" width="1199" height="479" rx="23.5" fill="none" stroke="#1E2E4A"/>
+<style>
+.hero-serif{font-family:Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif}.hero-sans{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif}.hero-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
+.hero-in{animation:hero-in 1s cubic-bezier(.16,1,.3,1) both}
+.hero-d1{animation-delay:.12s}.hero-d2{animation-delay:.24s}.hero-d3{animation-delay:.36s}.hero-d4{animation-delay:.48s}.hero-d5{animation-delay:.6s}.hero-d6{animation-delay:.72s}.hero-d7{animation-delay:.84s}.hero-d8{animation-delay:.96s}
+.hero-draw{stroke-dasharray:1400;animation:hero-draw 1.6s cubic-bezier(.65,0,.35,1) .4s both}
+@keyframes hero-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes hero-draw{from{stroke-dashoffset:1400}to{stroke-dashoffset:0}}
+.hero-band{animation:hero-band 7s cubic-bezier(.4,0,.6,1) 1.4s infinite}
+@keyframes hero-band{0%{transform:translateX(0)}40%{transform:translateX(1600px)}100%{transform:translateX(1600px)}}
+@media (prefers-reduced-motion:reduce){.hero-in,.hero-draw,.hero-band{animation:none}}
+.hero-blink{animation:hero-blink 1.1s steps(2,start) infinite}@keyframes hero-blink{to{visibility:hidden}}
+.hero-spin{transform-origin:955px 232px;animation:hero-spin 60s linear infinite}@keyframes hero-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.hero-spin,.hero-blink{animation:none}}</style>
+<g class="hero-in"><rect x="72" y="58" width="265" height="38" rx="19" fill="#122036" stroke="#2B4166"/><circle cx="96" cy="77" r="4" fill="#22D3EE"><animate attributeName="opacity" values="1;.35;1" dur="2.4s" repeatCount="indefinite"/></circle><text class="hero-mono" x="112" y="82" font-size="13.5" fill="#93A6C4">~/nikhil <tspan fill="#67E8F9">$</tspan><tspan fill="#EAF2FF"> build --agents</tspan></text><rect class="hero-blink" x="313" y="67" width="7" height="18" rx="1.5" fill="#67E8F9"/></g>
+<g class="hero-in hero-d1"><path d="M72 134 H104" stroke="#22D3EE" stroke-width="1.5"/><text class="hero-mono " x="116" y="138" font-size="12" letter-spacing="4.2" fill="#22D3EE" text-anchor="start">AI · ENGINEERING · DEVOPS</text></g>
+<g class="hero-in hero-d2"><text class="hero-serif" x="68" y="222" font-size="86" font-weight="300" letter-spacing="-2" fill="#EAF2FF">Nikhil Chandra</text></g>
+<g class="hero-in hero-d3"><text class="hero-serif" x="68" y="310" font-size="86" font-weight="300" letter-spacing="-2" fill="#EAF2FF"><tspan font-style="italic" fill="#C6F7FF">Sairam Tokala</tspan></text><clipPath id="hero-sc1"><text class="hero-serif" x="68" y="310" font-size="86" font-weight="300" letter-spacing="-2"><tspan font-style="italic">Sairam Tokala</tspan></text></clipPath><g clip-path="url(#hero-sc1)"><rect class="hero-band" x="-360" y="0" width="360" height="100%" fill="url(#hero-sheen)"/></g><text class="hero-serif" x="68" y="310" font-size="86" font-weight="300" letter-spacing="-2" fill="none"><tspan font-style="italic">Sairam Tokala</tspan><tspan fill="#22D3EE">.</tspan></text></g>
+<g class="hero-in hero-d4"><text class="hero-sans" x="72" y="372" font-size="15" font-weight="600" letter-spacing="3.2" fill="#EAF2FF">AI/ML ENGINEER · GENAI ENGINEER · DEVOPS</text></g>
+<g class="hero-in hero-d5"><text class="hero-serif" x="72" y="410" font-size="22" font-style="italic" fill="#93A6C4">Agents, retrieval and the plumbing that makes them a product.</text></g>
+<path class="hero-draw" d="M72 436 H1128" stroke="url(#hero-rule)" stroke-width="1"/><circle cx="72" cy="436" r="7" fill="url(#hero-dot)" opacity="0"><animate attributeName="cx" values="72;1128" dur="6s" begin="2.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".45 0 .55 1"/><animate attributeName="opacity" values="0;1;0" keyTimes="0;.15;1" dur="6s" begin="2.2s" repeatCount="indefinite"/></circle>
+<g class="hero-in hero-d6"><text class="hero-mono " x="72" y="460" font-size="10.5" letter-spacing="2.4" fill="#5F7394" text-anchor="start">DUBAI, UAE · AWS CERTIFIED ×2 · PG DEVOPS · PURDUE × EDUREKA</text><text class="hero-mono " x="1128" y="460" font-size="10.5" letter-spacing="2.4" fill="#5F7394" text-anchor="end">AGENT PLATFORMS · ENTERPRISE RAG · DOCUMENT AI</text></g>
+<g class="hero-in hero-d3">
+<path d="M770 76 V58 H788" fill="none" stroke="#2B4166" stroke-width="1.5"/>
+<path d="M1140 76 V58 H1122" fill="none" stroke="#2B4166" stroke-width="1.5"/>
+<path d="M770 388 V406 H788" fill="none" stroke="#2B4166" stroke-width="1.5"/>
+<path d="M1140 388 V406 H1122" fill="none" stroke="#2B4166" stroke-width="1.5"/>
+<circle cx="955" cy="232" r="162" fill="none" stroke="#2B4166" stroke-dasharray="3 7" opacity=".9"/>
+<circle cx="955" cy="232" r="112" fill="none" stroke="#2B4166"/>
+<circle cx="955" cy="232" r="66" fill="none" stroke="#1E2E4A"/>
+<g class="hero-spin"><circle cx="1117" cy="232" r="3.5" fill="#67E8F9"/><circle cx="1117" cy="232" r="9" fill="url(#hero-dot)" opacity=".8"/></g>
+<path d="M955 232 L955.0 120.0" stroke="#2B4166" stroke-width="1" opacity=".8"/>
+<circle cx="955.0" cy="120.0" r="11" fill="#22D3EE" opacity=".16"><animate attributeName="r" values="9;15;9" dur="3.2s" begin="0.0s" repeatCount="indefinite"/></circle>
+<circle cx="955.0" cy="120.0" r="4.5" fill="#67E8F9" stroke="#070B14" stroke-width="2"/>
+<text class="hero-mono " x="955.0" y="94.0" font-size="11" letter-spacing="2.6" fill="#93A6C4" text-anchor="middle">AGENTS</text>
+<path d="M955 232 L1061.5 197.4" stroke="#2B4166" stroke-width="1" opacity=".8"/>
+<circle cx="1061.5" cy="197.4" r="11" fill="#22D3EE" opacity=".16"><animate attributeName="r" values="9;15;9" dur="3.2s" begin="0.5s" repeatCount="indefinite"/></circle>
+<circle cx="1061.5" cy="197.4" r="4.5" fill="#67E8F9" stroke="#070B14" stroke-width="2"/>
+<text class="hero-mono " x="1080.5" y="195.2" font-size="11" letter-spacing="2.6" fill="#93A6C4" text-anchor="start">RAG</text>
+<path d="M955 232 L1020.8 322.6" stroke="#2B4166" stroke-width="1" opacity=".8"/>
+<circle cx="1020.8" cy="322.6" r="11" fill="#22D3EE" opacity=".16"><animate attributeName="r" values="9;15;9" dur="3.2s" begin="1.0s" repeatCount="indefinite"/></circle>
+<circle cx="1020.8" cy="322.6" r="4.5" fill="#67E8F9" stroke="#070B14" stroke-width="2"/>
+<text class="hero-mono " x="1032.6" y="342.8" font-size="11" letter-spacing="2.6" fill="#93A6C4" text-anchor="start">OCR</text>
+<path d="M955 232 L889.2 322.6" stroke="#2B4166" stroke-width="1" opacity=".8"/>
+<circle cx="889.2" cy="322.6" r="11" fill="#22D3EE" opacity=".16"><animate attributeName="r" values="9;15;9" dur="3.2s" begin="1.5s" repeatCount="indefinite"/></circle>
+<circle cx="889.2" cy="322.6" r="4.5" fill="#67E8F9" stroke="#070B14" stroke-width="2"/>
+<text class="hero-mono " x="877.4" y="342.8" font-size="11" letter-spacing="2.6" fill="#93A6C4" text-anchor="end">CI / CD</text>
+<path d="M955 232 L848.5 197.4" stroke="#2B4166" stroke-width="1" opacity=".8"/>
+<circle cx="848.5" cy="197.4" r="11" fill="#22D3EE" opacity=".16"><animate attributeName="r" values="9;15;9" dur="3.2s" begin="2.0s" repeatCount="indefinite"/></circle>
+<circle cx="848.5" cy="197.4" r="4.5" fill="#67E8F9" stroke="#070B14" stroke-width="2"/>
+<text class="hero-mono " x="829.5" y="195.2" font-size="11" letter-spacing="2.6" fill="#93A6C4" text-anchor="end">AWS</text>
+<rect x="909" y="186" width="92" height="92" rx="24" fill="#122036" stroke="#22D3EE" stroke-opacity=".6"/>
+<text class="hero-serif" x="955" y="247" text-anchor="middle" font-size="42" font-weight="300" letter-spacing="-1" fill="#EAF2FF">NT</text>
+<circle cx="985" cy="202" r="4" fill="#22D3EE"><animate attributeName="opacity" values="1;.3;1" dur="2s" repeatCount="indefinite"/></circle>
+</g>
+</svg>
