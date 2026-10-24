@@ -19,9 +19,9 @@ DATA = ROOT / "data" / "contributions.json"
 OUT = ROOT / "assets" / "contribution-heatmap.svg"
 
 W, H = 1200, 410
-C = dict(bg0="#070B14", bg1="#0C1527", surf2="#122036", line="#1E2E4A", line2="#2B4166",
-         txt="#EAF2FF", muted="#93A6C4", dim="#5F7394", cyan="#22D3EE", cyan2="#67E8F9")
-LEVELS = ["#121D32", "#155E75", "#0E8BA8", "#22D3EE", "#C6F7FF"]  # none → most
+C = dict(bg0="#06172A", bg1="#0A2238", surf2="#081D31", line="#123A5E", line2="#1B4E79",
+         txt="#DCEAF8", muted="#86A9CB", dim="#5E809F", cyan="#5EEAD4", cyan2="#99F6E4")
+LEVELS = ["#0C2740", "#15596B", "#1C8C94", "#5EEAD4", "#C8FBF0"]  # none → most
 SERIF = 'Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif'
 SANS = '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif'
 MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace'
@@ -98,7 +98,7 @@ def main() -> None:
             x, y = x0 + col * pitch, y0 + row * pitch
             title = f"{n} contribution{'s' if n != 1 else ''} on {nice(day)}"
             extra = f' stroke="{C["cyan2"]}" stroke-width="1.5"' if day == last else (f' stroke="{C["line"]}"' if lv == 0 else "")
-            cells.append(f'<rect class="hm-c" style="animation-delay:{col * .018:.3f}s" x="{x}" y="{y}" width="{cell}" height="{cell}" rx="3.5" '
+            cells.append(f'<rect class="hm-c" style="animation-delay:{col * .018:.3f}s" x="{x}" y="{y}" width="{cell}" height="{cell}" rx="2" '
                          f'fill="{LEVELS[lv]}"{extra}><title>{esc(title)}</title></rect>')
     # drop a first-column label that sits on top of the next one
     if len(month_labels) > 1 and month_labels[1][0] - month_labels[0][0] < 3:
@@ -112,7 +112,7 @@ def main() -> None:
            f"""<defs>
 <linearGradient id="hm-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{C['bg1']}"/><stop offset="1" stop-color="{C['bg0']}"/></linearGradient>
 <radialGradient id="hm-glow" cx=".15" cy=".2" r=".8"><stop offset="0" stop-color="{C['cyan']}" stop-opacity=".16"/><stop offset=".5" stop-color="{C['cyan']}" stop-opacity=".04"/><stop offset="1" stop-color="{C['cyan']}" stop-opacity="0"/></radialGradient>
-<pattern id="hm-grid" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="{C['line2']}" opacity=".5"/></pattern>
+<pattern id="hm-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0 V20 M0 20 H20" stroke="{C['line']}" stroke-width=".5" opacity=".55"/></pattern>
 <linearGradient id="hm-sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".22"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
 <clipPath id="hm-clip"><rect x="{x0 - 2}" y="{y0 - 2}" width="{grid_w + 4}" height="{7 * pitch}"/></clipPath>
 </defs>
@@ -126,11 +126,12 @@ def main() -> None:
 @keyframes hm-sweep{{0%{{transform:translateX(0)}}60%{{transform:translateX({grid_w + 240}px)}}100%{{transform:translateX({grid_w + 240}px)}}}}
 @media (prefers-reduced-motion:reduce){{.hm-in,.hm-c,.hm-sweep{{animation:none}}}}
 </style>
-<rect width="{W}" height="{H}" rx="24" fill="url(#hm-bg)"/><rect width="{W}" height="{H}" rx="24" fill="url(#hm-grid)"/><rect width="{W}" height="{H}" rx="24" fill="url(#hm-glow)"/>
-<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="23.5" fill="none" stroke="{C['line']}"/>"""]
+<rect width="{W}" height="{H}" fill="url(#hm-bg)"/><rect width="{W}" height="{H}" fill="url(#hm-grid)"/><rect width="{W}" height="{H}" fill="url(#hm-glow)"/>
+<rect x="8.5" y="8.5" width="{W - 17}" height="{H - 17}" fill="none" stroke="{C['line2']}"/>
+<rect x="14.5" y="14.5" width="{W - 29}" height="{H - 29}" fill="none" stroke="{C['line']}" stroke-width=".6"/>"""]
 
     # header
-    out.append(f'<g class="hm-in"><text class="hm-mono" x="56" y="66" font-size="11" letter-spacing="3" fill="{C["cyan"]}">COMMIT LOG · REAL GITHUB ACTIVITY</text>'
+    out.append(f'<g class="hm-in"><text class="hm-mono" x="56" y="66" font-size="11" letter-spacing="3" fill="{C["cyan"]}">FIG. 05 — TWELVE MONTHS OF PUBLIC ACTIVITY</text>'
                f'<text class="hm-serif" x="56" y="104" font-size="27" font-weight="300" fill="{C["txt"]}">Twelve months, <tspan font-style="italic" fill="{C["cyan2"]}">one commit</tspan> at a time.</text></g>')
     stats = [("CONTRIBUTIONS", f"{total:,}", f"{MONTHS[first.month - 1]} {first.year} – {MONTHS[last.month - 1]} {last.year}"),
              ("ACTIVE DAYS", f"{active}", f"of {len(counts)} days"),
@@ -167,7 +168,7 @@ def main() -> None:
     out.append(f'<text class="hm-sans" x="{lx - 8}" y="{H - 28}" text-anchor="end" font-size="11.5" fill="{C["dim"]}">Less</text>')
     for i, colr in enumerate(LEVELS):
         stroke = f' stroke="{C["line"]}"' if i == 0 else ""
-        out.append(f'<rect x="{lx + i * 18}" y="{H - 39}" width="14" height="14" rx="3.5" fill="{colr}"{stroke}/>')
+        out.append(f'<rect x="{lx + i * 18}" y="{H - 39}" width="14" height="14" rx="2" fill="{colr}"{stroke}/>')
     out.append(f'<text class="hm-sans" x="{lx + 5 * 18 + 6}" y="{H - 28}" font-size="11.5" fill="{C["dim"]}">More</text>')
     out.append("</svg>")
 

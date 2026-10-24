@@ -1,139 +1,31 @@
 #!/usr/bin/env python3
-"""Build the profile README cards (assets/*.svg).
+"""Build the profile README cards (assets/*.svg) — "Schematic" design.
+
+The profile is drawn as an engineering drawing: blueprint grid, drafting title
+blocks, numbered callouts, dimension lines, and each project rendered as its
+real architecture rather than a list of technologies.
 
 Everything the cards say lives in CONTENT below. Edit it, run
 
     python scripts/build_cards.py
 
-and commit the regenerated SVGs. No dependencies beyond the standard library.
+and commit the regenerated SVGs. Standard library only.
 The contribution heatmap is built separately by scripts/build_heatmap.py.
 """
 from __future__ import annotations
 
 import html
-import math
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets"
 W = 1200
 
-# --------------------------------------------------------------------------- content
-
-CONTENT = {
-    "name_line1": "Nikhil Chandra",
-    "name_line2": "Sairam Tokala",
-    "handle": "NIKHIL-956653",
-    "eyebrow": "AI · ENGINEERING · DEVOPS",
-    "role": "AI/ML ENGINEER · GENAI ENGINEER · DEVOPS",
-    "tagline": "Agents, retrieval and the plumbing that makes them a product.",
-    "strip_left": "DUBAI, UAE · AWS CERTIFIED ×2 · PG DEVOPS · PURDUE × EDUREKA",
-    "strip_right": "AGENT PLATFORMS · ENTERPRISE RAG · DOCUMENT AI",
-    "terminal_cmd": "~/nikhil $ build --agents",
-    "orbit_nodes": ["AGENTS", "RAG", "OCR", "CI / CD", "AWS"],
-    "monogram": "NT",
-    # 01 about — terminal lines: (command, output)
-    "about_lines": [
-        ("whoami", "Nikhil Chandra Sairam Tokala · AI/ML Engineer · GenAI Engineer · DevOps"),
-        ("cat focus.txt", "agent platforms · enterprise RAG · document AI · CI/CD on AWS"),
-        ("ls ./shipped", "enterprise-agent-platform  docgen  medical-bill-ocr  rag-curriculum"),
-        ("cat certifications.txt", "AWS Data Analytics – Specialty · AWS Developer – Associate · PG DevOps (Purdue)"),
-        ("echo $PRINCIPLE", "treat the model as untrusted · verify locally · ship with tests"),
-    ],
-    "about_cards": [
-        ("PRIMARY LANGUAGE", "Python", "FastAPI · typed · pytest-first"),
-        ("WHERE THE AI LIVES", "Agents · RAG", "LangGraph · pgvector · Qdrant"),
-        ("DRAWN TO", "DevOps", "Docker · GitHub Actions · AWS"),
-    ],
-    # 02 credentials
-    "credentials": [
-        ("CREDENTIAL 01 · AWS", "Data Analytics", "Specialty", "AWS Certified · Amazon Web Services"),
-        ("CREDENTIAL 02 · AWS", "Developer", "Associate", "AWS Certified · Amazon Web Services"),
-        ("CREDENTIAL 03 · PURDUE", "DevOps", "Post Graduate Program", "Purdue University · delivered by Edureka"),
-    ],
-    # 03 projects
-    "projects": [
-        {
-            "file": "project-eap",
-            "eyebrow": "01 · AI PLATFORM · MULTI-TENANT · 2026",
-            "title": "Enterprise Agent Platform",
-            "subtitle": ["Multi-tenant AI agents as a service — isolation, audit and", "durable runs, not just prompts."],
-            "built": ["Postgres RLS tenant isolation · ABAC clearance inside the RLS predicate",
-                      "hash-chained append-only audit log · Temporal workflows · Gemini + Anthropic providers"],
-            "stats": [("10", "Alembic migrations"), ("4", "architecture ADRs"), ("160+", "tests, green in CI")],
-            "chips": ["FastAPI", "SQLAlchemy 2.0", "pgvector", "Redis", "Temporal", "React"],
-            "motif": "tenants",
-            "alt": "Enterprise Agent Platform: multi-tenant AI agents as a service with Postgres RLS tenant isolation, ABAC clearance in the RLS predicate, hash-chained audit log, Temporal durable execution and Gemini plus Anthropic providers. 10 migrations, 4 ADRs, 160+ tests green in CI. FastAPI, SQLAlchemy 2.0, pgvector, Redis, Temporal, React.",
-        },
-        {
-            "file": "project-docgen",
-            "eyebrow": "02 · GENAI · DOCUMENT AUTOMATION · 2026",
-            "title": "Document Writing Assistant",
-            "subtitle": ["Jira ticket → LLM → a published Google Doc or Confluence page,", "with an evaluation gate in CI."],
-            "built": ["6 YAML document templates · faithfulness / completeness / structure scoring with an LLM judge",
-                      "HMAC-verified Jira webhook · in-place document updates with diffs · cloud or fully local LLM"],
-            "stats": [("368", "offline tests"), ("95%", "coverage gate in CI"), ("6", "document types")],
-            "chips": ["Python", "FastAPI", "Jira REST", "Google Docs API", "Ollama", "Docker"],
-            "motif": "pipeline",
-            "alt": "GenAI Document Writing Assistant: turns a Jira ticket into a published Google Doc or Confluence page using Gemini via OpenRouter or a local Ollama model. 6 YAML document templates, faithfulness and completeness evaluation with an LLM judge, HMAC-verified Jira webhook, in-place updates. 368 offline tests, 95% coverage gate, 6 document types. Python, FastAPI, Jira REST, Google Docs API, Ollama, Docker.",
-        },
-        {
-            "file": "project-bill-ocr",
-            "eyebrow": "03 · DOCUMENT AI · OCR · 2026",
-            "title": "Medical Bill OCR",
-            "subtitle": ["Scanned bills → validated, review-ready Excel.", "The LLM is treated as an untrusted component."],
-            "built": ["OpenCV preprocess → Tesseract 5 → Gemini extraction → local arithmetic validation",
-                      "review UI that highlights each value on the page · accuracy tracked by model and by week"],
-            "stats": [("45", "offline tests"), ("±$0.05", "reconciliation tolerance"), ("300 DPI", "scan rasterization")],
-            "chips": ["OpenCV", "Tesseract 5", "Gemini 2.5 Flash", "FastAPI", "pandas", "pytest"],
-            "motif": "checks",
-            "alt": "Medical Bill OCR: scanned photos and PDFs become validated Excel and CSV. OpenCV preprocessing, Tesseract 5 OCR, Gemini extraction, then local arithmetic validation; uncertain rows are flagged NEEDS_REVIEW. Review web UI highlights each value on the page. 45 offline tests, ±$0.05 reconciliation tolerance, 300 DPI rasterization. OpenCV, Tesseract 5, Gemini 2.5 Flash, FastAPI, pandas, pytest.",
-        },
-        {
-            "file": "project-rag",
-            "eyebrow": "04 · ENTERPRISE RAG · FULLY LOCAL · 2026",
-            "title": "Enterprise RAG Pipeline",
-            "subtitle": ["Hybrid retrieval over an 18-subject curriculum —", "the patterns that matter at scale, with no external APIs."],
-            "built": ["BM25 + dense merged by RRF · parent-child chunking · contextual retrieval",
-                      "cross-encoder rerank top-50 → top-5 · per-chunk ACL metadata · RAGAS evaluation"],
-            "stats": [("~6,800", "pages ingested"), ("~20K", "chunks indexed"), ("50 → 5", "rerank funnel")],
-            "chips": ["Qdrant", "Ollama", "nomic-embed", "BGE reranker", "RAGAS", "Streamlit"],
-            "motif": "funnel",
-            "alt": "Enterprise RAG Pipeline: a fully local hybrid retrieval system over an 18-subject curriculum of about 6,800 pages and 20K chunks. BM25 plus dense retrieval merged by RRF, parent-child chunking, contextual retrieval, cross-encoder reranking from top-50 to top-5, per-chunk ACL metadata and RAGAS evaluation. Qdrant, Ollama, nomic-embed, BGE reranker, RAGAS, Streamlit.",
-        },
-    ],
-    # 04 toolkit — (label, line1 (primary), line2, line3)
-    "toolkit": [
-        ("01 LANGUAGES", "Python", "TypeScript · SQL", "Bash · PowerShell"),
-        ("02 AI · LLM · AGENTS", "LangGraph · agents", "RAG · rerank · eval", "Gemini · Claude · Ollama"),
-        ("03 BACKEND & APIS", "FastAPI · Pydantic", "SQLAlchemy · Alembic", "JWT · RLS · ABAC"),
-        ("04 DATA & VECTORS", "Postgres · pgvector", "Qdrant · FAISS", "Redis · SQLite"),
-        ("05 DEVOPS & CLOUD", "Docker · Compose", "GitHub Actions CI", "AWS · Temporal"),
-        ("06 FRONTEND & QUALITY", "React · Vite · TS", "Streamlit", "pytest · ruff · mypy"),
-    ],
-    # section titles: (number, kicker, headline, italic part, right label)
-    "titles": [
-        ("01", "ABOUT", "Hello, I'm ", "Nikhil.", "WHO I AM"),
-        ("02", "CREDENTIALS", "Certified, ", "on the record.", "VERIFIABLE"),
-        ("03", "SELECTED WORK", "Systems, ", "not scripts.", "SHIPPED · PUBLIC REPOS"),
-        ("04", "TOOLKIT", "What I ", "reach for.", "STACK"),
-        ("05", "COMMIT LOG", "A year of ", "shipping.", "REFRESHED DAILY"),
-        ("06", "CONNECT", "Let's build ", "something real.", "SAY HELLO"),
-    ],
-    "footer_name": "Nikhil",
-    "footer_tagline": "Building AI that holds up in production.",
-    "footer_meta": "GITHUB.COM/NIKHIL-956653 · DUBAI, UAE",
-}
-
-# --------------------------------------------------------------------------- theme
-
 C = dict(
-    bg0="#070B14", bg1="#0C1527", surf="#0E1A2E", surf2="#122036",
-    line="#1E2E4A", line2="#2B4166",
-    txt="#EAF2FF", muted="#93A6C4", dim="#5F7394",
-    cyan="#22D3EE", cyan2="#67E8F9", cyan3="#C6F7FF", teal="#2DD4BF", amber="#F4B860",
+    bg0="#06172A", bg1="#0A2238", grid="#123A5E", grid2="#1B4E79",
+    ink="#DCEAF8", muted="#86A9CB", dim="#5E809F",
+    cy="#5EEAD4", cy2="#99F6E4", amber="#FCD34D", panel="#081D31",
 )
-SERIF = 'Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif'
 SANS = '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif'
 MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace'
 
@@ -142,421 +34,487 @@ def esc(s: str) -> str:
     return html.escape(s, quote=True)
 
 
-def text_w(s: str, size: float, kind: str = "sans") -> float:
-    """Rough width estimate (the viewer's fonts decide the real width)."""
-    k = {"sans": 0.56, "serif": 0.54, "mono": 0.62}[kind]
-    return len(s) * size * k
+# --------------------------------------------------------------------------- primitives
 
-
-def head(w: int, h: int, label: str) -> str:
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" '
-            f'role="img" aria-label="{esc(label)}">')
-
-
-def style(p: str, extra: str = "") -> str:
-    return f"""<style>
-.{p}-serif{{font-family:{SERIF}}}.{p}-sans{{font-family:{SANS}}}.{p}-mono{{font-family:{MONO}}}
-.{p}-in{{animation:{p}-in 1s cubic-bezier(.16,1,.3,1) both}}
-.{p}-d1{{animation-delay:.12s}}.{p}-d2{{animation-delay:.24s}}.{p}-d3{{animation-delay:.36s}}.{p}-d4{{animation-delay:.48s}}.{p}-d5{{animation-delay:.6s}}.{p}-d6{{animation-delay:.72s}}.{p}-d7{{animation-delay:.84s}}.{p}-d8{{animation-delay:.96s}}
-.{p}-draw{{stroke-dasharray:1400;animation:{p}-draw 1.6s cubic-bezier(.65,0,.35,1) .4s both}}
-@keyframes {p}-in{{from{{opacity:0;transform:translateY(12px)}}to{{opacity:1;transform:none}}}}
-@keyframes {p}-draw{{from{{stroke-dashoffset:1400}}to{{stroke-dashoffset:0}}}}
-.{p}-band{{animation:{p}-band 7s cubic-bezier(.4,0,.6,1) 1.4s infinite}}
-@keyframes {p}-band{{0%{{transform:translateX(0)}}40%{{transform:translateX(1600px)}}100%{{transform:translateX(1600px)}}}}
-@media (prefers-reduced-motion:reduce){{.{p}-in,.{p}-draw,.{p}-band{{animation:none}}}}
-{extra}</style>"""
-
-
-def panel(p: str, w: int, h: int, glow_cx: float = 0.85, glow_cy: float = 0.1) -> str:
-    return f"""<defs>
+def sheet(p: str, w: int, h: int, label: str, extra_css: str = "") -> str:
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="{esc(label)}">
+<defs>
 <linearGradient id="{p}-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{C['bg1']}"/><stop offset="1" stop-color="{C['bg0']}"/></linearGradient>
-<radialGradient id="{p}-glow" cx="{glow_cx}" cy="{glow_cy}" r="0.75"><stop offset="0" stop-color="{C['cyan']}" stop-opacity=".17"/><stop offset=".45" stop-color="{C['cyan']}" stop-opacity=".04"/><stop offset="1" stop-color="{C['cyan']}" stop-opacity="0"/></radialGradient>
-<pattern id="{p}-grid" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="{C['line2']}" opacity=".5"/></pattern>
-<linearGradient id="{p}-rule" gradientUnits="userSpaceOnUse" x1="40" y1="0" x2="1160" y2="0"><stop offset="0" stop-color="{C['cyan']}"/><stop offset=".55" stop-color="{C['line2']}"/><stop offset="1" stop-color="{C['line2']}" stop-opacity="0"/></linearGradient>
-<linearGradient id="{p}-sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".95"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
-<radialGradient id="{p}-dot"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="{C['cyan2']}" stop-opacity=".7"/><stop offset="1" stop-color="{C['cyan']}" stop-opacity="0"/></radialGradient>
+<pattern id="{p}-g1" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0 V20 M0 20 H20" stroke="{C['grid']}" stroke-width=".5" opacity=".55"/></pattern>
+<pattern id="{p}-g2" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M100 0 V100 M0 100 H100" stroke="{C['grid2']}" stroke-width=".7" opacity=".5"/></pattern>
+<linearGradient id="{p}-sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".9"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
 </defs>
-<rect width="{w}" height="{h}" rx="24" fill="url(#{p}-bg)"/>
-<rect width="{w}" height="{h}" rx="24" fill="url(#{p}-grid)"/>
-<rect width="{w}" height="{h}" rx="24" fill="url(#{p}-glow)"/>
-<rect x=".5" y=".5" width="{w - 1}" height="{h - 1}" rx="23.5" fill="none" stroke="{C['line']}"/>"""
+<style>
+.{p}-m{{font-family:{MONO}}}.{p}-s{{font-family:{SANS}}}
+.{p}-i{{animation:{p}-i .9s cubic-bezier(.16,1,.3,1) both}}
+.{p}-d1{{animation-delay:.1s}}.{p}-d2{{animation-delay:.2s}}.{p}-d3{{animation-delay:.3s}}.{p}-d4{{animation-delay:.4s}}.{p}-d5{{animation-delay:.5s}}.{p}-d6{{animation-delay:.6s}}
+.{p}-dr{{stroke-dasharray:1200;animation:{p}-dr 1.8s cubic-bezier(.65,0,.35,1) .3s both}}
+.{p}-band{{animation:{p}-band 8s cubic-bezier(.4,0,.6,1) 1.6s infinite}}
+@keyframes {p}-i{{from{{opacity:0;transform:translateY(10px)}}to{{opacity:1;transform:none}}}}
+@keyframes {p}-dr{{from{{stroke-dashoffset:1200}}to{{stroke-dashoffset:0}}}}
+@keyframes {p}-band{{0%{{transform:translateX(0)}}45%{{transform:translateX(1700px)}}100%{{transform:translateX(1700px)}}}}
+@media (prefers-reduced-motion:reduce){{.{p}-i,.{p}-dr,.{p}-band{{animation:none}}}}
+{extra_css}</style>
+<rect width="{w}" height="{h}" fill="url(#{p}-bg)"/>
+<rect width="{w}" height="{h}" fill="url(#{p}-g1)"/>
+<rect width="{w}" height="{h}" fill="url(#{p}-g2)"/>
+<rect x="8.5" y="8.5" width="{w-17}" height="{h-17}" fill="none" stroke="{C['grid2']}"/>
+<rect x="14.5" y="14.5" width="{w-29}" height="{h-29}" fill="none" stroke="{C['grid']}" stroke-width=".6"/>'''
 
 
-def card(x: float, y: float, w: float, h: float, p: str, accent: bool = True, rx: int = 18) -> str:
-    s = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" fill="{C["surf"]}" stroke="{C["line"]}"/>'
-    if accent:
-        s += f'<path d="M{x + 26} {y + .5} H{x + w - 26}" stroke="{C["cyan"]}" stroke-opacity=".55" stroke-width="1.5"/>'
+def mono(p, x, y, s, size=11, fill=None, ls=1.8, anchor="start"):
+    return (f'<text class="{p}-m" x="{x}" y="{y}" font-size="{size}" letter-spacing="{ls}" '
+            f'fill="{fill or C["dim"]}" text-anchor="{anchor}">{esc(s)}</text>')
+
+
+def sans(p, x, y, s, size=13, fill=None, anchor="start", weight=None, style=None):
+    a = f' font-weight="{weight}"' if weight else ""
+    a += f' font-style="{style}"' if style else ""
+    return (f'<text class="{p}-s" x="{x}" y="{y}" font-size="{size}" fill="{fill or C["muted"]}" '
+            f'text-anchor="{anchor}"{a}>{esc(s)}</text>')
+
+
+def callout(p, n, x, y, r=11):
+    return (f'<circle cx="{x}" cy="{y}" r="{r}" fill="{C["bg0"]}" stroke="{C["cy"]}" stroke-width="1.2"/>'
+            f'<text class="{p}-m" x="{x}" y="{y+4.5}" text-anchor="middle" font-size="12" fill="{C["cy"]}">{n}</text>')
+
+
+_SHEEN = [0]
+
+
+def sheen(p: str, attrs: str, text: str, base: str) -> str:
+    _SHEEN[0] += 1
+    cid = f"{p}-sc{_SHEEN[0]}"
+    return (f'<text {attrs} fill="{base}">{text}</text>'
+            f'<clipPath id="{cid}"><text {attrs}>{text}</text></clipPath>'
+            f'<g clip-path="url(#{cid})"><rect class="{p}-band" x="-380" y="0" width="380" height="100%" fill="url(#{p}-sheen)"/></g>')
+
+
+def table(p, x, y, cols, rows, rh=30, head_h=28):
+    """Drafting register table. cols = [(label, width, align)]; rows = [[(text, fill, kind)]]."""
+    out, total = [], sum(c[1] for c in cols)
+    out.append(f'<rect x="{x}" y="{y}" width="{total}" height="{head_h}" fill="{C["cy"]}" fill-opacity=".08"/>')
+    cx = x
+    for label, cw, _ in cols:
+        out.append(mono(p, cx + 12, y + head_h - 9, label, 9.5, C["cy"], 1.9))
+        cx += cw
+    out.append(f'<path d="M{x} {y+head_h} h{total}" stroke="{C["cy"]}" stroke-opacity=".45"/>')
+    ry = y + head_h
+    for i, row in enumerate(rows):
+        if i % 2:
+            out.append(f'<rect x="{x}" y="{ry}" width="{total}" height="{rh}" fill="{C["panel"]}" fill-opacity=".5"/>')
+        cx = x
+        for (_, cw, align), (val, fill, kind) in zip(cols, row):
+            tx = cx + 12 if align == "l" else (cx + cw - 12 if align == "r" else cx + cw / 2)
+            anc = "start" if align == "l" else ("end" if align == "r" else "middle")
+            if kind == "m":
+                out.append(mono(p, round(tx), ry + rh / 2 + 4, val, 11.5, fill, 1.2, anc))
+            else:
+                out.append(sans(p, round(tx), ry + rh / 2 + 4.5, val, 13, fill, anc))
+            cx += cw
+        out.append(f'<path d="M{x} {ry+rh} h{total}" stroke="{C["grid2"]}" stroke-width=".6" opacity=".8"/>')
+        ry += rh
+    out.append(f'<rect x="{x}" y="{y}" width="{total}" height="{ry-y}" fill="none" stroke="{C["grid2"]}"/>')
+    cx = x
+    for _, cw, _a in cols[:-1]:
+        cx += cw
+        out.append(f'<path d="M{cx} {y} V{ry}" stroke="{C["grid2"]}" stroke-width=".6" opacity=".8"/>')
+    return "".join(out), ry
+
+
+def box(p, x, y, bw, bh, title, sub="", accent=False):
+    col = C["cy"] if accent else C["grid2"]
+    s = (f'<rect x="{x:.0f}" y="{y:.0f}" width="{bw:.0f}" height="{bh:.0f}" rx="3" fill="{C["bg0"]}" fill-opacity=".62" '
+         f'stroke="{col}" stroke-width="{1.3 if accent else .9}"/>')
+    cy = y + bh / 2
+    if sub:
+        s += sans(p, round(x + bw / 2), round(cy - 2), title, 12.5, C["ink"], "middle")
+        s += mono(p, round(x + bw / 2), round(cy + 14), sub, 9.5, C["dim"], 1, "middle")
+    else:
+        s += sans(p, round(x + bw / 2), round(cy + 4.5), title, 12.5, C["ink"], "middle")
     return s
 
 
-def chip(x: float, y: float, label: str, p: str, size: float = 12.5) -> tuple[float, str]:
-    w = round(text_w(label, size) + 26)
-    s = (f'<g><rect x="{x}" y="{y}" width="{w}" height="28" rx="14" fill="{C["surf2"]}" stroke="{C["line2"]}"/>'
-         f'<text class="{p}-sans" x="{x + w / 2:.1f}" y="{y + 18.5}" text-anchor="middle" font-size="{size}" '
-         f'fill="{C["cyan3"]}">{esc(label)}</text></g>')
-    return w, s
+def arrow(p, x1, y, x2, label="", dash=False):
+    d = ' stroke-dasharray="4 4"' if dash else ""
+    s = f'<path class="{p}-dr" d="M{x1:.0f} {y:.0f} H{x2:.0f}" stroke="{C["cy"]}" stroke-width="1" opacity=".85"{d}/>'
+    s += (f'<path d="M{x2-7:.0f} {y-4:.0f} L{x2:.0f} {y:.0f} L{x2-7:.0f} {y+4:.0f}" fill="none" '
+          f'stroke="{C["cy"]}" stroke-width="1" opacity=".85"/>')
+    if label:
+        s += mono(p, round((x1 + x2) / 2), round(y - 9), label, 9.5, C["muted"], 1, "middle")
+    return s
 
 
-def pulse_dot(x1: float, x2: float, y: float, p: str, dur: float = 6, begin: float = 2.2) -> str:
-    return (f'<circle cx="{x1}" cy="{y}" r="7" fill="url(#{p}-dot)" opacity="0">'
-            f'<animate attributeName="cx" values="{x1};{x2}" dur="{dur}s" begin="{begin}s" repeatCount="indefinite" '
-            f'calcMode="spline" keyTimes="0;1" keySplines=".45 0 .55 1"/>'
-            f'<animate attributeName="opacity" values="0;1;0" keyTimes="0;.15;1" dur="{dur}s" begin="{begin}s" repeatCount="indefinite"/></circle>')
+def chain(p, items, y, bh=56, left=60, right=1140, labels=None):
+    """Evenly place a left-to-right chain of boxes with arrows. Returns (svg, positions)."""
+    n = len(items)
+    gap = 36
+    bw = min(150, (right - left - gap * (n - 1)) / n)
+    total = n * bw + gap * (n - 1)
+    x = left + (right - left - total) / 2
+    out, pos = [], []
+    for i, (t, sub, acc) in enumerate(items):
+        out.append(box(p, x, y, bw, bh, t, sub, acc))
+        pos.append((x, x + bw, y, y + bh))
+        if i < n - 1:
+            lbl = labels[i] if labels and i < len(labels) else ""
+            out.append(arrow(p, x + bw + 4, y + bh / 2, x + bw + gap - 4, lbl))
+        x += bw + gap
+    return "".join(out), pos
 
 
-_SHEEN_N = [0]
+def notes(p, y, items, left=60):
+    """Numbered annotation strip under a diagram."""
+    out = [f'<path d="M{left} {y-18} H1140" stroke="{C["grid2"]}" stroke-width=".7"/>']
+    per = (1140 - left) / len(items)
+    for i, (n, t) in enumerate(items):
+        x = left + i * per
+        out.append(mono(p, round(x), y + 6, f"({n})", 10.5, C["cy"], 1))
+        out.append(sans(p, round(x + 26), y + 6, t, 12, C["muted"]))
+    return "".join(out)
 
 
-def sheen(p: str, attrs: str, plain: str, italic: str, base: str, plain_fill: str) -> str:
-    """`plain` followed by an italic span in `base`, with a white band sweeping across the text.
+# --------------------------------------------------------------------------- content
 
-    The band is a gradient rect clipped by the text itself and moved with a CSS animation,
-    so renderers without animation support simply show the text in its base colours.
-    """
-    _SHEEN_N[0] += 1
-    cid = f"{p}-sc{_SHEEN_N[0]}"
-    return (f'<text {attrs} fill="{plain_fill}">{plain}<tspan font-style="italic" fill="{base}">{italic}</tspan></text>'
-            f'<clipPath id="{cid}"><text {attrs}>{plain}<tspan font-style="italic">{italic}</tspan></text></clipPath>'
-            f'<g clip-path="url(#{cid})"><rect class="{p}-band" x="-360" y="0" width="360" height="100%" fill="url(#{p}-sheen)"/></g>')
+CONTENT = {
+    "name1": "Nikhil Chandra",
+    "name2": "Sairam Tokala",
+    "kicker": "DRAWING 01 — SYSTEMS ENGINEER",
+    "role": "AI/ML · GENAI · DEVOPS",
+    "tagline": "I draw the system before I write the code.",
+    "titleblock": [("LOCATION", "DUBAI, UAE", 150), ("DISCIPLINE", "AI PLATFORMS · RETRIEVAL", 230),
+                   ("SHEET", "01 OF 06", 100), ("REV", "2026.10", 100)],
+    "stack": [("INTERFACE", "react · vite · streamlit"), ("SERVICE", "fastapi · pydantic"),
+              ("AGENTS", "langgraph · tools · eval"), ("RETRIEVAL", "pgvector · qdrant · rerank"),
+              ("PLATFORM", "docker · actions · aws")],
+    "titles": [("01", "ABOUT", "Specification"), ("02", "CREDENTIALS", "Certification register"),
+               ("03", "SELECTED WORK", "Four systems, drawn"), ("04", "TOOLKIT", "Parts list"),
+               ("05", "COMMIT LOG", "Twelve months"), ("06", "CONNECT", "Say hello")],
+    # 01 about — specification register
+    "spec": [
+        ("01", "language", "Python 3.11+ — FastAPI, SQLAlchemy 2.0 async, pytest-first"),
+        ("02", "agents", "LangGraph runtime, tool calling, offline eval harness"),
+        ("03", "retrieval", "pgvector + Qdrant, hybrid BM25 + dense, cross-encoder rerank"),
+        ("04", "platform", "Docker, GitHub Actions, AWS, Temporal durable execution"),
+        ("05", "principle", "Treat the model as untrusted — verify locally, ship with tests"),
+    ],
+    # 02 credentials — (ref, credential, issuer, date, status)
+    "creds": [
+        ("01", "Post Graduate Program in DevOps", "Edureka & Purdue University", "Jan 2026", "CURRENT"),
+        ("02", "Data Science Capstone", "Johns Hopkins University", "Nov 2025", "CURRENT"),
+        ("03", "Introduction to Retrieval Augmented Generation", "Duke University", "Oct 2025", "CURRENT"),
+        ("04", "Generative AI for Data Science", "Microsoft", "Oct 2025", "CURRENT"),
+        ("05", "Develop Generative AI Applications", "IBM", "Oct 2025", "CURRENT"),
+        ("06", "Business Intelligence Professional Certificate", "Google", "Oct 2025", "CURRENT"),
+        ("07", "Python for Everybody (specialization)", "University of Michigan", "Jul 2025", "CURRENT"),
+        ("08", "AWS Certified Data Analytics – Specialty", "Amazon Web Services", "2022–2025", "LAPSED"),
+        ("09", "AWS Certified Developer – Associate", "Amazon Web Services", "2022–2025", "LAPSED"),
+        ("10", "AWS Certified Cloud Practitioner", "Amazon Web Services", "2022–2025", "LAPSED"),
+    ],
+    # 04 toolkit — parts list
+    "parts": [
+        ("A1", "Languages", "Python · TypeScript · SQL · Bash"),
+        ("A2", "AI / LLM", "LangGraph · RAG · rerank · eval · Gemini · Claude · Ollama"),
+        ("B1", "Backend", "FastAPI · Pydantic · SQLAlchemy · Alembic · JWT · RLS · ABAC"),
+        ("B2", "Data", "PostgreSQL · pgvector · Qdrant · FAISS · Redis · SQLite"),
+        ("C1", "Platform", "Docker · Compose · GitHub Actions · AWS · Temporal"),
+        ("C2", "Quality", "pytest · ruff · mypy · coverage gates · RAGAS"),
+    ],
+    "footer_tag": "Building AI that holds up in production.",
+    "footer_meta": "GITHUB.COM/NIKHIL-956653 · DUBAI, UAE",
+}
+
+PROJECTS = [
+    dict(file="project-eap", fig="FIG. 01 — MULTI-TENANT AGENT PLATFORM", title="Enterprise Agent Platform",
+         repo="NIKHIL-956653/enterprise-agent-platform", stats="162 tests · 10 migrations · 4 ADRs",
+         stack="fastapi · sqlalchemy · pgvector · redis · temporal · react", kind="eap",
+         notes=[("1", "not cleared for a chunk → never retrieved → never in a prompt"),
+                ("2", "every run is a workflow — a crash resumes at the last step")],
+         alt=("Enterprise Agent Platform, drawn as a schematic: a tenant client authenticates to a FastAPI service, "
+              "requests cross a Postgres row-level-security boundary carrying tenant and clearance, and reach "
+              "pgvector. Redis handles rate limits and queues; Temporal makes runs durable; Gemini and Anthropic "
+              "sit behind one provider protocol. 162 tests, 10 migrations, 4 ADRs.")),
+    dict(file="project-docgen", fig="FIG. 02 — DOCUMENT GENERATION PIPELINE", title="Document Writing Assistant",
+         repo="NIKHIL-956653/GenAI-Document-Writing-Assistant", stats="368 tests · 95% coverage gate · 6 templates",
+         stack="python · fastapi · jira rest · google docs · ollama · docker", kind="docgen",
+         notes=[("1", "the eval gate scores faithfulness against the ticket"),
+                ("2", "a re-run updates the same document in place, with a diff")],
+         alt=("Document Writing Assistant, drawn as a pipeline: a Jira ticket is fetched, passed to a cloud or local "
+              "model, scored by an evaluation gate for faithfulness, completeness and structure, then published to "
+              "Google Docs or Confluence. 368 offline tests, a 95% coverage gate in CI, 6 document templates.")),
+    dict(file="project-bill-ocr", fig="FIG. 03 — DOCUMENT AI / OCR PIPELINE", title="Medical Bill OCR",
+         repo="NIKHIL-956653/medical-bill-ocr", stats="45 tests · ±$0.05 tolerance · 300 DPI",
+         stack="opencv · tesseract 5 · gemini · fastapi · pandas · pytest", kind="ocr",
+         notes=[("1", "local arithmetic re-checks every figure the model returned"),
+                ("2", "anything unverified is flagged NEEDS_REVIEW, never guessed")],
+         alt=("Medical Bill OCR, drawn as a pipeline: a scan is classified, preprocessed with OpenCV, read by "
+              "Tesseract 5, extracted by Gemini, then re-verified by local arithmetic before export to Excel. "
+              "Anything that fails validation is flagged NEEDS_REVIEW. 45 tests, ±$0.05 tolerance, 300 DPI.")),
+    dict(file="project-rag", fig="FIG. 04 — HYBRID RETRIEVAL PIPELINE", title="Enterprise RAG Pipeline",
+         repo="NIKHIL-956653/rag-curriculum", stats="~6,800 pages · ~20K chunks · 50 → 5 rerank",
+         stack="qdrant · ollama · nomic-embed · bge reranker · ragas · streamlit", kind="rag",
+         notes=[("1", "BM25 and dense results are merged by reciprocal rank fusion"),
+                ("2", "fully local — no external API in the retrieval path")],
+         alt=("Enterprise RAG Pipeline, drawn as a retrieval funnel: a query is expanded into variants, searched "
+              "by BM25 and dense vectors in parallel, merged by reciprocal rank fusion, reranked by a cross-encoder "
+              "from top-50 to top-5, expanded to parent chunks and answered with citations. About 6,800 pages and "
+              "20,000 chunks, fully local.")),
+]
 
 
-def rule(x1: float, x2: float, y: float, p: str) -> str:
-    return f'<path class="{p}-draw" d="M{x1} {y} H{x2}" stroke="url(#{p}-rule)" stroke-width="1"/>' + pulse_dot(x1, x2, y, p)
-
-
-def mono(p: str, x: float, y: float, s: str, size: float = 11.5, fill: str | None = None, ls: float = 2.6,
-         anchor: str = "start", cls: str = "") -> str:
-    fill = fill or C["cyan"]
-    return (f'<text class="{p}-mono {cls}" x="{x}" y="{y}" font-size="{size}" letter-spacing="{ls}" '
-            f'fill="{fill}" text-anchor="{anchor}">{esc(s)}</text>')
-
-
-# --------------------------------------------------------------------------- cards
-
-
-def build_title(num: str, kicker: str, plain: str, italic: str, right: str) -> str:
-    p = f"t{num}"
-    h = 120
-    out = [head(W, h, f"{num} {kicker}: {plain}{italic}"), panel(p, W, h, 0.9, 0.5), style(p)]
-    out.append(f'<g class="{p}-in"><rect x="40" y="18" width="46" height="30" rx="8" fill="{C["surf2"]}" stroke="{C["line2"]}"/>'
-               f'<text class="{p}-mono" x="63" y="38.5" text-anchor="middle" font-size="12" letter-spacing="1" fill="{C["cyan2"]}">{esc(num)}</text>'
-               + mono(p, 100, 38, kicker, 12, C["cyan"], 3.4) + "</g>")
-    out.append(f'<g class="{p}-in {p}-d2">'
-               + sheen(p, f'class="{p}-serif" x="40" y="88" font-size="42" font-weight="300" letter-spacing="-.5"',
-                       esc(plain), esc(italic), C["cyan2"], C["txt"]) + "</g>")
-    out.append(f'<g class="{p}-in {p}-d3">' + mono(p, 1160, 38, right, 10.5, C["dim"], 2.4, "end") + "</g>")
-    out.append(rule(40, 1160, 108, p))
-    out.append("</svg>")
-    return "\n".join(out)
-
+# --------------------------------------------------------------------------- sheets
 
 def build_hero() -> str:
-    p = "hero"
-    h = 480
+    p, h = "hero", 440
     c = CONTENT
-    label = (f"{c['name_line1']} {c['name_line2']} — {c['role'].title()}. {c['tagline']} "
-             f"{c['strip_left'].title()}.")
-    extra = f""".{p}-blink{{animation:{p}-blink 1.1s steps(2,start) infinite}}@keyframes {p}-blink{{to{{visibility:hidden}}}}
-.{p}-spin{{transform-origin:955px 232px;animation:{p}-spin 60s linear infinite}}@keyframes {p}-spin{{to{{transform:rotate(360deg)}}}}
-@media (prefers-reduced-motion:reduce){{.{p}-spin,.{p}-blink{{animation:none}}}}"""
-    out = [head(W, h, label), panel(p, W, h, 0.8, 0.5), style(p, extra)]
-    # terminal pill
-    tw = round(text_w(c["terminal_cmd"], 13.5, "mono") + 56)
-    out.append(f'<g class="{p}-in"><rect x="72" y="58" width="{tw}" height="38" rx="19" fill="{C["surf2"]}" stroke="{C["line2"]}"/>'
-               f'<circle cx="96" cy="77" r="4" fill="{C["cyan"]}"><animate attributeName="opacity" values="1;.35;1" dur="2.4s" repeatCount="indefinite"/></circle>'
-               f'<text class="{p}-mono" x="112" y="82" font-size="13.5" fill="{C["muted"]}">{esc(c["terminal_cmd"].split("$")[0])}'
-               f'<tspan fill="{C["cyan2"]}">$</tspan><tspan fill="{C["txt"]}">{esc(c["terminal_cmd"].split("$", 1)[1])}</tspan></text>'
-               f'<rect class="{p}-blink" x="{72 + tw - 24}" y="67" width="7" height="18" rx="1.5" fill="{C["cyan2"]}"/></g>')
-    # eyebrow
-    out.append(f'<g class="{p}-in {p}-d1"><path d="M72 134 H104" stroke="{C["cyan"]}" stroke-width="1.5"/>'
-               + mono(p, 116, 138, c["eyebrow"], 12, C["cyan"], 4.2) + "</g>")
-    # name
-    out.append(f'<g class="{p}-in {p}-d2"><text class="{p}-serif" x="68" y="222" font-size="86" font-weight="300" letter-spacing="-2" fill="{C["txt"]}">{esc(c["name_line1"])}</text></g>')
-    out.append(f'<g class="{p}-in {p}-d3">'
-               + sheen(p, f'class="{p}-serif" x="68" y="310" font-size="86" font-weight="300" letter-spacing="-2"',
-                       "", esc(c["name_line2"]), C["cyan3"], C["txt"])
-               + f'<text class="{p}-serif" x="68" y="310" font-size="86" font-weight="300" letter-spacing="-2" fill="none">'
-                 f'<tspan font-style="italic">{esc(c["name_line2"])}</tspan><tspan fill="{C["cyan"]}">.</tspan></text></g>')
-    # role + tagline
-    out.append(f'<g class="{p}-in {p}-d4"><text class="{p}-sans" x="72" y="372" font-size="15" font-weight="600" letter-spacing="3.2" fill="{C["txt"]}">{esc(c["role"])}</text></g>')
-    out.append(f'<g class="{p}-in {p}-d5"><text class="{p}-serif" x="72" y="410" font-size="22" font-style="italic" fill="{C["muted"]}">{esc(c["tagline"])}</text></g>')
-    # bottom strip
-    out.append(rule(72, 1128, 436, p))
-    out.append(f'<g class="{p}-in {p}-d6">' + mono(p, 72, 460, c["strip_left"], 10.5, C["dim"], 2.4)
-               + mono(p, 1128, 460, c["strip_right"], 10.5, C["dim"], 2.4, "end") + "</g>")
-    # orbit motif
-    cx, cy = 955, 232
-    m = [f'<g class="{p}-in {p}-d3">']
-    for i, (x, y) in enumerate([(770, 58), (1140, 58), (770, 406), (1140, 406)]):
-        dx = 18 if i % 2 == 0 else -18
-        dy = 18 if i < 2 else -18
-        m.append(f'<path d="M{x} {y + dy} V{y} H{x + dx}" fill="none" stroke="{C["line2"]}" stroke-width="1.5"/>')
-    m.append(f'<circle cx="{cx}" cy="{cy}" r="162" fill="none" stroke="{C["line2"]}" stroke-dasharray="3 7" opacity=".9"/>')
-    m.append(f'<circle cx="{cx}" cy="{cy}" r="112" fill="none" stroke="{C["line2"]}"/>')
-    m.append(f'<circle cx="{cx}" cy="{cy}" r="66" fill="none" stroke="{C["line"]}"/>')
-    # orbiting dot on the outer ring
-    m.append(f'<g class="{p}-spin"><circle cx="{cx + 162}" cy="{cy}" r="3.5" fill="{C["cyan2"]}"/>'
-             f'<circle cx="{cx + 162}" cy="{cy}" r="9" fill="url(#{p}-dot)" opacity=".8"/></g>')
-    nodes = c["orbit_nodes"]
-    for i, name in enumerate(nodes):
-        a = math.radians(-90 + i * (360 / len(nodes)))
-        nx, ny = cx + 112 * math.cos(a), cy + 112 * math.sin(a)
-        m.append(f'<path d="M{cx} {cy} L{nx:.1f} {ny:.1f}" stroke="{C["line2"]}" stroke-width="1" opacity=".8"/>')
-        m.append(f'<circle cx="{nx:.1f}" cy="{ny:.1f}" r="11" fill="{C["cyan"]}" opacity=".16">'
-                 f'<animate attributeName="r" values="9;15;9" dur="3.2s" begin="{i * .5}s" repeatCount="indefinite"/></circle>')
-        m.append(f'<circle cx="{nx:.1f}" cy="{ny:.1f}" r="4.5" fill="{C["cyan2"]}" stroke="{C["bg0"]}" stroke-width="2"/>')
-        lx = nx + 20 * math.cos(a)
-        ly = ny + 20 * math.sin(a) + 4
-        anchor = "middle" if abs(math.cos(a)) < .25 else ("start" if math.cos(a) > 0 else "end")
-        if abs(math.cos(a)) < .25:
-            ly += -10 if math.sin(a) < 0 else 10
-        m.append(mono(p, round(lx, 1), round(ly, 1), name, 11, C["muted"], 2.6, anchor))
-    m.append(f'<rect x="{cx - 46}" y="{cy - 46}" width="92" height="92" rx="24" fill="{C["surf2"]}" stroke="{C["cyan"]}" stroke-opacity=".6"/>')
-    m.append(f'<text class="{p}-serif" x="{cx}" y="{cy + 15}" text-anchor="middle" font-size="42" font-weight="300" letter-spacing="-1" fill="{C["txt"]}">{esc(c["monogram"])}</text>')
-    m.append(f'<circle cx="{cx + 30}" cy="{cy - 30}" r="4" fill="{C["cyan"]}"><animate attributeName="opacity" values="1;.3;1" dur="2s" repeatCount="indefinite"/></circle>')
-    m.append("</g>")
-    out.extend(m)
-    out.append("</svg>")
-    return "\n".join(out)
+    label = (f"{c['name1']} {c['name2']} — AI/ML, GenAI and DevOps engineer in Dubai, UAE. "
+             f"{c['tagline']} Stack, top to bottom: " +
+             "; ".join(f"{k.lower()}: {v}" for k, v in c["stack"]) + ".")
+    o = [sheet(p, W, h, label)]
+    o.append(f'<g class="{p}-i">' + mono(p, 44, 64, c["kicker"], 11.5, C["cy"], 3.4) + "</g>")
+    o.append(f'<g class="{p}-i {p}-d1">'
+             + sans(p, 42, 140, c["name1"], 56, C["ink"], weight="300")
+             + sheen(p, f'class="{p}-s" x="42" y="198" font-size="56" font-weight="300" letter-spacing="-1.6"',
+                     esc(c["name2"]), C["ink"]) + "</g>")
+    o.append(f'<path class="{p}-dr" d="M44 226 H560" stroke="{C["cy"]}" stroke-width="1.2"/>')
+    o.append(f'<g class="{p}-i {p}-d3">' + mono(p, 44, 258, c["role"], 14, C["muted"], 3)
+             + sans(p, 44, 290, c["tagline"], 17, C["dim"], style="italic") + "</g>")
+    # drafting title block
+    o.append(f'<g class="{p}-i {p}-d4">')
+    x, ty = 44, 322
+    for k, v, cw in c["titleblock"]:
+        o.append(f'<rect x="{x}" y="{ty}" width="{cw}" height="54" fill="{C["panel"]}" fill-opacity=".5" stroke="{C["grid2"]}"/>'
+                 + mono(p, x + 11, ty + 20, k, 9.5, C["dim"], 1.6)
+                 + mono(p, x + 11, ty + 41, v, 12.5, C["ink"], 0.6))
+        x += cw
+    o.append("</g>")
+    # layered stack, right
+    ox, ly = 660, 66
+    o.append(f'<g class="{p}-i {p}-d2">')
+    for i, (k, v) in enumerate(c["stack"]):
+        o.append(f'<rect x="{ox}" y="{ly}" width="420" height="52" fill="{C["bg0"]}" fill-opacity=".55" stroke="{C["grid2"]}"/>'
+                 f'<path d="M{ox} {ly} h6 v52 h-6 z" fill="{C["cy"]}" opacity="{.25+i*.14:.2f}"/>'
+                 + mono(p, ox + 20, ly + 22, k, 10.5, C["cy"], 2)
+                 + mono(p, ox + 20, ly + 41, v, 12.5, C["muted"], 0.6)
+                 + callout(p, i + 1, ox - 26, ly + 26))
+        if i < len(c["stack"]) - 1:
+            o.append(f'<path d="M{ox+210} {ly+52} v10" stroke="{C["grid2"]}" stroke-width="1"/>')
+        ly += 62
+    o.append(f'<path d="M{ox+440} 66 V{ly-10}" stroke="{C["cy"]}" stroke-width=".8" opacity=".7"/>'
+             f'<path d="M{ox+435} 66 h10 M{ox+435} {ly-10} h10" stroke="{C["cy"]}" stroke-width=".8" opacity=".7"/>'
+             f'<text class="{p}-m" transform="rotate(90 {ox+462} {(66+ly-10)/2:.0f})" x="{ox+462}" '
+             f'y="{(66+ly-10)/2:.0f}" text-anchor="middle" font-size="10" letter-spacing="1.6" fill="{C["cy"]}">FULL STACK</text>')
+    o.append("</g></svg>")
+    return "\n".join(o)
+
+
+def build_title(num, kicker, sub) -> str:
+    p, h = f"t{num}", 96
+    o = [sheet(p, W, h, f"{num} — {kicker}: {sub}")]
+    o.append(f'<g class="{p}-i"><rect x="44" y="30" width="44" height="30" fill="{C["cy"]}" fill-opacity=".1" stroke="{C["cy"]}" stroke-opacity=".5"/>'
+             + mono(p, 66, 50, num, 13, C["cy"], 1, "middle")
+             + mono(p, 104, 50, kicker, 13, C["ink"], 3.6)
+             + mono(p, 1156, 50, sub.upper(), 10.5, C["dim"], 2.2, "end"))
+    o.append(f'<path class="{p}-dr" d="M44 72 H1156" stroke="{C["cy"]}" stroke-width=".9" opacity=".65"/>')
+    for i in range(12):
+        o.append(f'<path d="M{104+i*88} 72 v6" stroke="{C["grid2"]}" stroke-width=".7"/>')
+    o.append("</g></svg>")
+    return "\n".join(o)
 
 
 def build_about() -> str:
-    p = "about"
-    h = 420
+    p, h = "ab", 376
     c = CONTENT
-    label = "About: " + " ".join(f"{cmd} → {res}." for cmd, res in c["about_lines"]) + " " + \
-            " ".join(f"{k.title()}: {v} ({d})." for k, v, d in c["about_cards"])
-    extra = f".{p}-blink{{animation:{p}-blink 1.1s steps(2,start) infinite}}@keyframes {p}-blink{{to{{visibility:hidden}}}}"
-    out = [head(W, h, label), panel(p, W, h, 0.95, 0.9), style(p, extra)]
-    # terminal
-    out.append(f'<g class="{p}-in">{card(40, 40, 762, 340, p, accent=False)}'
-               f'<path d="M40 86 H802" stroke="{C["line"]}"/>'
-               f'<circle cx="66" cy="63" r="5" fill="{C["cyan"]}" opacity=".9"/><circle cx="84" cy="63" r="5" fill="{C["cyan"]}" opacity=".5"/><circle cx="102" cy="63" r="5" fill="{C["cyan"]}" opacity=".25"/>'
-               + mono(p, 421, 67, f"{c['handle'].lower()}@github: ~", 11.5, C["dim"], 2.2, "middle") + "</g>")
-    y = 118
-    for i, (cmd, res) in enumerate(c["about_lines"]):
-        out.append(f'<g class="{p}-in {p}-d{min(i + 1, 8)}">'
-                   f'<text class="{p}-mono" x="70" y="{y}" font-size="15" fill="{C["cyan"]}">$ <tspan fill="{C["txt"]}">{esc(cmd)}</tspan></text>'
-                   f'<text class="{p}-mono" x="70" y="{y + 25}" font-size="14.5" fill="{C["cyan"]}">→ <tspan fill="{C["muted"]}">{esc(res)}</tspan></text></g>')
-        y += 52
-    out.append(f'<rect class="{p}-blink" x="70" y="{y - 14}" width="8" height="16" fill="{C["cyan2"]}"/>')
-    # side cards
-    for i, (k, v, d) in enumerate(c["about_cards"]):
-        cy = 40 + i * 116
-        out.append(f'<g class="{p}-in {p}-d{i + 3}">{card(838, cy, 322, 100, p, accent=False)}'
-                   f'<path d="M838.5 {cy + 22} V{cy + 78}" stroke="{C["cyan"]}" stroke-width="3" stroke-linecap="round"/>'
-                   + mono(p, 862, cy + 32, k, 10.5, C["cyan"], 2.6)
-                   + f'<text class="{p}-serif" x="862" y="{cy + 64}" font-size="29" fill="{C["txt"]}">{esc(v)}</text>'
-                   + f'<text class="{p}-sans" x="862" y="{cy + 86}" font-size="12.5" fill="{C["muted"]}">{esc(d)}</text></g>')
-    out.append("</svg>")
-    return "\n".join(out)
-
-
-def hexagon(cx: float, cy: float, r: float, p: str, i: int) -> str:
-    pts = " ".join(f"{cx + r * math.cos(math.radians(60 * k - 30)):.1f},{cy + r * math.sin(math.radians(60 * k - 30)):.1f}" for k in range(6))
-    inner = " ".join(f"{cx + r * .55 * math.cos(math.radians(60 * k - 30)):.1f},{cy + r * .55 * math.sin(math.radians(60 * k - 30)):.1f}" for k in range(6))
-    return (f'<polygon points="{pts}" fill="{C["surf2"]}" stroke="{C["cyan"]}" stroke-opacity=".7"/>'
-            f'<polygon points="{inner}" fill="none" stroke="{C["cyan2"]}" stroke-opacity=".9">'
-            f'<animateTransform attributeName="transform" type="rotate" values="0 {cx} {cy};360 {cx} {cy}" dur="{18 + i * 4}s" repeatCount="indefinite"/></polygon>'
-            f'<circle cx="{cx}" cy="{cy}" r="3" fill="{C["cyan2"]}"/>')
+    label = "Specification. " + " ".join(f"{k}: {v}." for _, k, v in c["spec"])
+    o = [sheet(p, W, h, label)]
+    o.append(f'<g class="{p}-i">' + mono(p, 44, 54, "SPECIFICATION — WHAT I BUILD WITH", 11, C["cy"], 3) + "</g>")
+    cols = [("REF", 70, "c"), ("SUBSYSTEM", 190, "l"), ("SPECIFICATION", 836, "l")]
+    rows = [[(r, C["cy"], "m"), (k, C["ink"], "s"), (v, C["muted"], "s")] for r, k, v in c["spec"]]
+    tbl, end = table(p, 44, 74, cols, rows, rh=42)
+    o.append(f'<g class="{p}-i {p}-d2">{tbl}</g>')
+    o.append(f'<g class="{p}-i {p}-d4">' + mono(p, 44, end + 34, "DUBAI, UAE", 10.5, C["dim"], 2)
+             + mono(p, 1156, end + 34, "ALL FOUR SYSTEMS BELOW ARE PUBLIC REPOSITORIES", 10.5, C["dim"], 2, "end") + "</g>")
+    o.append("</svg>")
+    return "\n".join(o)
 
 
 def build_credentials() -> str:
-    p = "cred"
-    h = 280
+    p, h = "cr", 452
     c = CONTENT
-    label = "Credentials: " + " ".join(f"{a} {b} ({d})." for _, a, b, d in c["credentials"])
-    out = [head(W, h, label), panel(p, W, h, 0.5, 1.2), style(p)]
-    xs = [40, 419, 798]
-    for i, (k, l1, l2, d) in enumerate(c["credentials"]):
-        x = xs[i]
-        out.append(f'<g class="{p}-in {p}-d{i + 1}">{card(x, 40, 362, 200, p)}'
-                   + mono(p, x + 28, 74, k, 10.5, C["cyan"], 2.6)
-                   + hexagon(x + 318, 70, 20, p, i)
-                   + f'<text class="{p}-serif" x="{x + 28}" y="{131}" font-size="30" fill="{C["txt"]}">{esc(l1)}</text>'
-                   + f'<text class="{p}-serif" x="{x + 28}" y="{167}" font-size="24" font-style="italic" fill="{C["cyan2"]}">{esc(l2)}</text>'
-                   + f'<text class="{p}-sans" x="{x + 28}" y="{208}" font-size="12.5" fill="{C["muted"]}">{esc(d)}</text></g>')
-    out.append(rule(40, 1160, 258, p))
-    out.append("</svg>")
-    return "\n".join(out)
+    cur = sum(1 for r in c["creds"] if r[4] == "CURRENT")
+    label = ("Certification register. " +
+             " ".join(f"{n}, {iss}, {d}, {st.lower()}." for _, n, iss, d, st in c["creds"]))
+    o = [sheet(p, W, h, label)]
+    o.append(f'<g class="{p}-i">' + mono(p, 44, 54, "CERTIFICATION REGISTER", 11, C["cy"], 3)
+             + mono(p, 1156, 54, f"{cur} CURRENT · {len(c['creds'])-cur} LAPSED · VERIFIABLE ON LINKEDIN", 10.5, C["dim"], 2, "end") + "</g>")
+    cols = [("REF", 58, "c"), ("CREDENTIAL", 460, "l"), ("ISSUER", 330, "l"), ("DATE", 140, "l"), ("STATUS", 108, "c")]
+    rows = []
+    for ref, name, iss, date, st in c["creds"]:
+        live = st == "CURRENT"
+        rows.append([(ref, C["cy"] if live else C["dim"], "m"),
+                     (name, C["ink"] if live else C["muted"], "s"),
+                     (iss, C["muted"], "s"), (date, C["muted"], "m"),
+                     (st, C["cy"] if live else C["amber"], "m")])
+    tbl, end = table(p, 44, 72, cols, rows, rh=31)
+    o.append(f'<g class="{p}-i {p}-d2">{tbl}</g>')
+    o.append(f'<g class="{p}-i {p}-d4">'
+             + sans(p, 44, end + 30, "Lapsed entries are shown with their real validity window rather than quietly dropped.", 12, C["dim"]) + "</g>")
+    o.append("</svg>")
+    return "\n".join(o)
 
 
-# ---- project motifs (right-hand panel, x 760..1160, y 40..340)
+# --------------------------------------------------------------------------- project diagrams
 
-def motif_tenants(p: str) -> str:
-    rows = [("tenant · acme", "clearance: internal"), ("tenant · globex", "clearance: restricted"), ("tenant · initech", "clearance: public")]
-    s = [mono(p, 800, 78, "ONE DATABASE · ROW-LEVEL SECURITY", 10.5, C["cyan"], 2.6)]
-    for i, (t, cl) in enumerate(rows):
-        y = 96 + i * 62
-        s.append(f'<rect x="800" y="{y}" width="330" height="48" rx="12" fill="{C["surf2"]}" stroke="{C["line2"]}">'
-                 f'<animate attributeName="stroke" values="{C["line2"]};{C["cyan"]};{C["line2"]}" keyTimes="0;.5;1" dur="6s" begin="{i * 2}s" repeatCount="indefinite"/></rect>')
-        s.append(f'<rect x="800" y="{y + 12}" width="3" height="24" rx="1.5" fill="{C["cyan"]}" opacity=".9"/>')
-        s.append(f'<text class="{p}-mono" x="818" y="{y + 29}" font-size="13" fill="{C["txt"]}">{esc(t)}</text>')
-        s.append(f'<text class="{p}-mono" x="1116" y="{y + 29}" font-size="11" text-anchor="end" fill="{C["muted"]}">{esc(cl)}</text>')
-        # lock
-        s.append(f'<rect x="{1070}" y="{y + 19}" width="10" height="8" rx="2" fill="none" stroke="{C["cyan2"]}" opacity=".0"/>')
-    s.append(f'<text class="{p}-mono" x="800" y="300" font-size="11" fill="{C["cyan2"]}">WHERE tenant_id = :tenant <tspan fill="{C["muted"]}">AND</tspan> clearance ≤ :principal</text>')
-    s.append(note(p, 800, 322, ["not cleared → never retrieved → never inside a prompt"]))
-    return "".join(s)
-
-
-def note(p: str, x: float, y: float, lines: list[str]) -> str:
-    return "".join(f'<text class="{p}-sans" x="{x}" y="{y + i * 17}" font-size="12" fill="{C["dim"]}">{esc(t)}</text>'
-                   for i, t in enumerate(lines))
-
-
-def motif_pipeline(p: str) -> str:
-    boxes = [("JIRA", "ticket + context"), ("LLM", "cloud · local"), ("DOC", "Google Docs · Confluence")]
-    s = [mono(p, 800, 78, "FETCH → GENERATE → SCORE → PUBLISH", 10.5, C["cyan"], 2.6)]
-    xs = [800, 930, 1060]
-    for i, (t, d) in enumerate(boxes):
-        x = xs[i]
-        s.append(f'<rect x="{x}" y="118" width="92" height="64" rx="14" fill="{C["surf2"]}" stroke="{C["line2"]}"/>')
-        s.append(f'<text class="{p}-serif" x="{x + 46}" y="150" text-anchor="middle" font-size="22" fill="{C["txt"]}">{esc(t)}</text>')
-        s.append(f'<text class="{p}-sans" x="{x + 46}" y="169" text-anchor="middle" font-size="9.5" fill="{C["muted"]}">{esc(d)}</text>')
-        if i < 2:
-            s.append(f'<path d="M{x + 92} 150 H{x + 130}" stroke="{C["line2"]}" stroke-width="1.5"/>'
-                     f'<path d="M{x + 124} 145 L{x + 131} 150 L{x + 124} 155" fill="none" stroke="{C["line2"]}" stroke-width="1.5"/>')
-    s.append(f'<circle r="5" fill="url(#{p}-dot)" opacity=".95"><animateMotion dur="4s" repeatCount="indefinite" path="M800 150 H1152" calcMode="spline" keyTimes="0;1" keySplines=".4 0 .6 1"/></circle>')
-    # eval gate
-    s.append(f'<rect x="800" y="214" width="352" height="54" rx="12" fill="none" stroke="{C["line2"]}" stroke-dasharray="4 5"/>')
-    s.append(mono(p, 818, 236, "EVAL GATE · CI", 10, C["cyan2"], 2.4))
-    s.append(f'<text class="{p}-sans" x="818" y="256" font-size="12" fill="{C["muted"]}">faithfulness · completeness · structure, scored against the ticket</text>')
-    s.append(note(p, 800, 300, ["re-runs skip unchanged tickets; a changed ticket", "updates the same document in place and logs the diff"]))
-    return "".join(s)
+def diagram_eap(p):
+    o, y = [], 168
+    top, bot = y - 62, y + 74          # satellite rows, clear of the title line
+    o.append(box(p, 60, y, 118, 56, "client", "tenant user"))
+    o.append(arrow(p, 182, y + 28, 246, "JWT"))
+    o.append(box(p, 250, y, 132, 56, "FastAPI", "async API", True))
+    o.append(arrow(p, 386, y + 28, 450, "principal"))
+    o.append(box(p, 454, y, 156, 56, "RLS boundary", "tenant + clearance", True))
+    o.append(arrow(p, 614, y + 28, 678))
+    o.append(box(p, 682, y, 146, 56, "Postgres", "pgvector"))
+    o.append(box(p, 454, top, 156, 48, "Redis", "limits · queues"))
+    o.append(box(p, 454, bot, 156, 48, "Temporal", "durable runs"))
+    o.append(f'<path d="M316 {y} V{top+24} h134" stroke="{C["grid2"]}" stroke-width=".9" fill="none"/>')
+    o.append(f'<path d="M316 {y+56} V{bot+24} h134" stroke="{C["grid2"]}" stroke-width=".9" fill="none"/>')
+    o.append(box(p, 900, top, 146, 48, "Gemini", "provider"))
+    o.append(box(p, 900, bot, 146, 48, "Anthropic", "provider"))
+    o.append(f'<path d="M828 {y+28} h42 V{top+24} h30 M870 {y+28} V{bot+24} h30" stroke="{C["grid2"]}" stroke-width=".9" fill="none"/>')
+    o.append(mono(p, 884, y + 22, "one protocol", 9.5, C["dim"], 1))
+    o.append(callout(p, 1, 632, y - 16))
+    o.append(callout(p, 2, 632, y + 100))
+    return "".join(o)
 
 
-def motif_checks(p: str) -> str:
-    checks = [("line items  ==  printed total", "± $0.05"), ("OCR mean confidence", "≥ 65"), ("provider · invoice # · date", "present"), ("date parseable", "8 formats")]
-    s = [mono(p, 800, 78, "TRUST MODEL · LOCAL, DETERMINISTIC", 10.5, C["cyan"], 2.6)]
-    for i, (t, v) in enumerate(checks):
-        y = 104 + i * 44
-        s.append(f'<circle cx="812" cy="{y}" r="9" fill="none" stroke="{C["line2"]}"/>')
-        s.append(f'<path class="{p}-tick" style="animation-delay:{1 + i * .35:.2f}s" d="M807 {y} L811 {y + 4} L818 {y - 4}" fill="none" stroke="{C["teal"]}" '
-                 f'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="20"/>')
-        s.append(f'<text class="{p}-mono" x="834" y="{y + 5}" font-size="13" fill="{C["txt"]}">{esc(t)}</text>')
-        s.append(f'<text class="{p}-mono" x="1150" y="{y + 5}" font-size="12" text-anchor="end" fill="{C["cyan2"]}">{esc(v)}</text>')
-        s.append(f'<path d="M834 {y + 16} H1150" stroke="{C["line"]}"/>')
-    y = 104 + 4 * 44
-    s.append(f'<rect x="800" y="{y - 14}" width="352" height="36" rx="10" fill="{C["amber"]}" fill-opacity=".1" stroke="{C["amber"]}" stroke-opacity=".5"/>')
-    s.append(f'<text class="{p}-mono" x="816" y="{y + 9}" font-size="12.5" fill="{C["amber"]}">anything unverified → <tspan font-weight="700">NEEDS_REVIEW</tspan></text>')
-    s.append(note(p, 800, y + 48, ["one corrupt file never aborts the batch ·", "every reviewer save is kept as a revision"]))
-    return "".join(s)
+def diagram_docgen(p):
+    o, y = [], 168
+    items = [("Jira", "ticket + context", False), ("docgen", "fetch · prompt", True),
+             ("LLM", "cloud or local", False), ("eval gate", "scored in CI", True),
+             ("Google Docs", "or Confluence", False)]
+    ch, pos = chain(p, items, y, 56, 60, 1060, ["REST", "prompt", "draft", "pass"])
+    o.append(ch)
+    lx0, lx1, _, _ = pos[2]
+    mid = (lx0 + lx1) / 2
+    # both model backends sit above the LLM stage, on one bracket
+    o.append(box(p, mid - 152, y - 62, 144, 46, "OpenRouter", "gemini"))
+    o.append(box(p, mid + 8, y - 62, 144, 46, "Ollama", "fully local"))
+    o.append(f'<path d="M{mid-80:.0f} {y-16} V{y-26} H{mid+80:.0f} V{y-16} M{mid:.0f} {y-26} V{y}" '
+             f'stroke="{C["grid2"]}" stroke-width=".9" fill="none"/>')
+    gx0, gx1, _, _ = pos[3]
+    o.append(mono(p, round((gx0 + gx1) / 2), y + 80, "faithfulness · completeness · structure", 9.5, C["muted"], 1, "middle"))
+    o.append(callout(p, 1, gx1 + 16, y - 16))
+    o.append(callout(p, 2, pos[4][1] + 16, y + 28))
+    o.append(f'<path d="M{pos[4][1]:.0f} {y+56} V{y+100} H{pos[1][0]:.0f} V{y+56}" stroke="{C["cy"]}" stroke-width=".9" '
+             f'stroke-dasharray="4 4" opacity=".6" fill="none"/>')
+    o.append(mono(p, round((pos[1][0] + pos[4][1]) / 2), y + 114, "re-run → updates the same document in place", 9.5, C["cy"], 1, "middle"))
+    return "".join(o)
 
 
-def motif_funnel(p: str) -> str:
-    steps = [("query → multi-query variants", 352), ("hybrid: dense + BM25 (Qdrant)", 316), ("RRF merge → top-50", 280), ("cross-encoder rerank → top-5", 248), ("parent expand → cited answer", 222)]
-    s = [mono(p, 800, 78, "RETRIEVAL FUNNEL · FULLY LOCAL", 10.5, C["cyan"], 2.6)]
-    for i, (t, w) in enumerate(steps):
-        y = 96 + i * 40
-        x = 800 + (352 - w) / 2
-        op = .3 + i * .14
-        s.append(f'<rect class="{p}-bar" style="animation-delay:{.4 + i * .2:.1f}s" x="{x:.0f}" y="{y}" width="{w}" height="30" rx="8" '
-                 f'fill="{C["cyan"]}" fill-opacity="{op:.2f}" stroke="{C["cyan"]}" stroke-opacity=".35"/>')
-        s.append(f'<text class="{p}-mono" x="976" y="{y + 19.5}" text-anchor="middle" font-size="11.5" fill="{C["txt"]}">{esc(t)}</text>')
-    s.append(note(p, 800, 314, ["the same pipeline from this laptop to a sharded cluster —", "only the infrastructure changes"]))
-    return "".join(s)
+def diagram_ocr(p):
+    o, y = [], 156
+    items = [("scan", "pdf · photo", False), ("ingest", "classify", False), ("OpenCV", "deskew · threshold", False),
+             ("Tesseract 5", "ocr + confidence", False), ("Gemini", "extract JSON", False),
+             ("validate", "local arithmetic", True), ("Excel", "two sheets", False)]
+    ch, pos = chain(p, items, y, 56, 60, 1140)
+    o.append(ch)
+    vx0, vx1, _, _ = pos[5]
+    o.append(f'<path d="M{(vx0+vx1)/2:.0f} {y+56} v34" stroke="{C["amber"]}" stroke-width="1" opacity=".8"/>')
+    o.append(f'<rect x="{vx0-56:.0f}" y="{y+90}" width="{(vx1-vx0)+112:.0f}" height="38" rx="4" '
+             f'fill="{C["amber"]}" fill-opacity=".1" stroke="{C["amber"]}" stroke-opacity=".55"/>')
+    o.append(mono(p, round((vx0 + vx1) / 2), y + 114, "NEEDS_REVIEW", 12, C["amber"], 1.6, "middle"))
+    o.append(callout(p, 1, vx0 - 16, y - 16))
+    o.append(callout(p, 2, vx1 + 70, y + 109))
+    o.append(mono(p, 60, y + 114, "±$0.05 reconciliation · OCR confidence ≥ 65 · 8 date formats", 10, C["muted"], 1))
+    return "".join(o)
 
 
-MOTIFS = {"tenants": motif_tenants, "pipeline": motif_pipeline, "checks": motif_checks, "funnel": motif_funnel}
+def diagram_rag(p):
+    o, y = [], 160
+    o.append(box(p, 60, y, 124, 54, "query", "user question"))
+    o.append(arrow(p, 188, y + 27, 248))
+    o.append(box(p, 252, y, 140, 54, "multi-query", "variants", True))
+    o.append(box(p, 452, y - 44, 150, 46, "BM25", "sparse"))
+    o.append(box(p, 452, y + 52, 150, 46, "dense", "nomic-embed"))
+    o.append(f'<path d="M396 {y+27} h28 v-21 h24 M424 {y+27} v48 h24" stroke="{C["cy"]}" stroke-width="1" opacity=".85" fill="none"/>')
+    o.append(box(p, 650, y, 130, 54, "RRF merge", "top-50", True))
+    o.append(f'<path d="M602 {y-21} h24 v48 h20 M602 {y+75} h24 v-48" stroke="{C["cy"]}" stroke-width="1" opacity=".85" fill="none"/>')
+    o.append(arrow(p, 784, y + 27, 840))
+    o.append(box(p, 844, y, 140, 54, "rerank", "cross-encoder", True))
+    o.append(arrow(p, 988, y + 27, 1040))
+    o.append(box(p, 1044, y, 96, 54, "top-5", "cited"))
+    o.append(callout(p, 1, 715, y - 24))
+    o.append(callout(p, 2, 914, y + 78))
+    o.append(mono(p, 60, y + 120, "parent-child chunking · contextual retrieval · per-chunk ACL · RAGAS eval", 10, C["muted"], 1))
+    return "".join(o)
+
+
+DIAGRAMS = {"eap": diagram_eap, "docgen": diagram_docgen, "ocr": diagram_ocr, "rag": diagram_rag}
 
 
 def build_project(pr: dict) -> str:
-    p = pr["file"].replace("project-", "pj-")
-    h = 380
-    extra = (f".{p}-tick{{animation:{p}-tick .5s ease-out both}}@keyframes {p}-tick{{from{{stroke-dashoffset:20}}to{{stroke-dashoffset:0}}}}"
-             f".{p}-bar{{transform-box:fill-box;transform-origin:center;animation:{p}-bar .7s cubic-bezier(.16,1,.3,1) both}}"
-             f"@keyframes {p}-bar{{from{{transform:scaleX(0)}}to{{transform:none}}}}"
-             f"@media (prefers-reduced-motion:reduce){{.{p}-tick,.{p}-bar{{animation:none}}}}")
-    out = [head(W, h, pr["alt"]), panel(p, W, h, 0.72, 0.5), style(p, extra)]
-    out.append(f'<path d="M28 .5 H560" stroke="{C["cyan"]}" stroke-opacity=".6" stroke-width="2"/>')
-    out.append(f'<path d="M740 52 V330" stroke="{C["line"]}"/>')
-    out.append(f'<g class="{p}-in">' + mono(p, 56, 62, pr["eyebrow"], 11, C["cyan"], 3) + "</g>")
-    out.append(f'<g class="{p}-in {p}-d1"><text class="{p}-serif" x="56" y="112" font-size="46" font-weight="300" letter-spacing="-1" fill="{C["txt"]}">{esc(pr["title"])}</text></g>')
-    y = 148
-    sub = [f'<g class="{p}-in {p}-d2">']
-    for line in pr["subtitle"]:
-        sub.append(f'<text class="{p}-sans" x="56" y="{y}" font-size="17.5" fill="{C["muted"]}">{esc(line)}</text>')
-        y += 24
-    sub.append("</g>")
-    out.extend(sub)
-    y += 10
-    b = [f'<g class="{p}-in {p}-d3">']
-    for i, line in enumerate(pr["built"]):
-        prefix = f'<tspan fill="{C["cyan"]}" font-weight="600">BUILT ›</tspan> ' if i == 0 else ""
-        b.append(f'<text class="{p}-sans" x="56" y="{y}" font-size="13" fill="{C["cyan3"]}">{prefix}{esc(line)}</text>')
-        y += 19
-    b.append("</g>")
-    out.extend(b)
-    y += 46
-    st = [f'<g class="{p}-in {p}-d4">']
-    x = 56
-    for v, l in pr["stats"]:
-        st.append(f'<text class="{p}-serif" x="{x}" y="{y}" font-size="40" font-weight="300" letter-spacing="-1" fill="{C["txt"]}">{esc(v)}</text>')
-        st.append(f'<text class="{p}-sans" x="{x}" y="{y + 22}" font-size="12.5" fill="{C["muted"]}">{esc(l)}</text>')
-        x += max(176, text_w(v, 40, "serif") + 40, text_w(l, 12.5) + 36)
-    st.append("</g>")
-    out.extend(st)
-    y += 44
-    ch = [f'<g class="{p}-in {p}-d5">']
-    x = 56
-    for label in pr["chips"]:
-        w, s = chip(x, y, label, p)
-        ch.append(s)
-        x += w + 8
-    ch.append("</g>")
-    out.extend(ch)
-    out.append(f'<g class="{p}-in {p}-d3">{MOTIFS[pr["motif"]](p)}</g>')
-    out.append("</svg>")
-    return "\n".join(out)
+    p, h = pr["file"].replace("project-", "pj"), 384
+    o = [sheet(p, W, h, pr["alt"])]
+    o.append(f'<g class="{p}-i">' + mono(p, 44, 50, pr["fig"], 11, C["cy"], 3)
+             + mono(p, 1156, 50, "SCALE 1:1 · REV 2026.10", 10.5, C["dim"], 2, "end") + "</g>")
+    o.append(f'<g class="{p}-i {p}-d1">' + sans(p, 44, 90, pr["title"], 30, C["ink"], weight="300")
+             + mono(p, 1156, 90, "github.com/" + pr["repo"].split("/", 1)[1], 11, C["muted"], 1, "end") + "</g>")
+    o.append(f'<g class="{p}-i {p}-d3">{DIAGRAMS[pr["kind"]](p)}</g>')
+    o.append(f'<g class="{p}-i {p}-d5">' + notes(p, 324, pr["notes"])
+             + mono(p, 44, 356, pr["stats"], 11, C["ink"], 1)
+             + mono(p, 1156, 356, pr["stack"], 11, C["dim"], 1, "end") + "</g>")
+    o.append("</svg>")
+    return "\n".join(o)
 
 
 def build_toolkit() -> str:
-    p = "kit"
-    h = 500
+    p, h = "kit", 352
     c = CONTENT
-    label = "Toolkit. " + " ".join(f"{k.split(' ', 1)[1].title()}: {a}, {b}, {d}." for k, a, b, d in c["toolkit"])
-    out = [head(W, h, label), panel(p, W, h, 0.5, 0.5), style(p)]
-    xs = [40, 419, 798]
-    for i, (k, a, b, d) in enumerate(c["toolkit"]):
-        x, y = xs[i % 3], 40 + (i // 3) * 220
-        out.append(f'<g class="{p}-in {p}-d{i + 1}">{card(x, y, 362, 200, p)}'
-                   + mono(p, x + 28, y + 36, k, 10.5, C["cyan"], 2.6)
-                   + f'<text class="{p}-serif" x="{x + 28}" y="{y + 90}" font-size="29" fill="{C["txt"]}">{esc(a)}</text>'
-                   + (f'<text class="{p}-mono" x="{x + 28 + text_w(a, 29, "serif") + 14:.0f}" y="{y + 80}" font-size="9.5" letter-spacing="2" fill="{C["cyan2"]}">PRIMARY</text>' if i == 0 else "")
-                   + f'<text class="{p}-serif" x="{x + 28}" y="{y + 130}" font-size="24" fill="{C["cyan3"]}">{esc(b)}</text>'
-                   + f'<text class="{p}-serif" x="{x + 28}" y="{y + 166}" font-size="22" fill="{C["muted"]}">{esc(d)}</text></g>')
-    for (x, y) in [(410.5, 250), (789.5, 250)]:
-        out.append(f'<rect x="{x - 6}" y="{y - 6}" width="12" height="12" transform="rotate(45 {x} {y})" fill="none" stroke="{C["cyan"]}" stroke-opacity=".7"/>')
-    out.append("</svg>")
-    return "\n".join(out)
+    label = "Parts list. " + " ".join(f"{k}: {v}." for _, k, v in c["parts"])
+    o = [sheet(p, W, h, label)]
+    o.append(f'<g class="{p}-i">' + mono(p, 44, 54, "PARTS LIST — BILL OF MATERIALS", 11, C["cy"], 3)
+             + mono(p, 1156, 54, "6 ASSEMBLIES", 10.5, C["dim"], 2, "end") + "</g>")
+    cols = [("ITEM", 78, "c"), ("ASSEMBLY", 180, "l"), ("COMPONENTS", 838, "l")]
+    rows = [[(r, C["cy"], "m"), (k, C["ink"], "s"), (v, C["muted"], "s")] for r, k, v in c["parts"]]
+    tbl, _ = table(p, 44, 74, cols, rows, rh=38)
+    o.append(f'<g class="{p}-i {p}-d2">{tbl}</g>')
+    o.append("</svg>")
+    return "\n".join(o)
 
 
 def build_footer() -> str:
-    p = "foot"
-    h = 230
+    p, h = "ft", 220
     c = CONTENT
-    out = [head(W, h, f"{c['footer_name']} — {c['footer_tagline']}"), panel(p, W, h, 0.1, 0.9), style(p)]
-    out.append(f'<g class="{p}-in"><text class="{p}-serif" x="56" y="150" font-size="112" font-weight="300" letter-spacing="-4" fill="{C["txt"]}">{esc(c["footer_name"])}<tspan fill="{C["cyan"]}">.</tspan></text></g>')
-    out.append(f'<g class="{p}-in {p}-d2">'
-               + sheen(p, f'class="{p}-serif" x="1144" y="118" text-anchor="end" font-size="27"', "", esc(c["footer_tagline"]), C["cyan2"], C["txt"])
-               + mono(p, 1144, 150, c["footer_meta"], 11, C["dim"], 2.6, "end") + "</g>")
-    out.append(rule(56, 1144, 192, p))
-    out.append("</svg>")
-    return "\n".join(out)
+    o = [sheet(p, W, h, f"Nikhil Chandra Sairam Tokala — {c['footer_tag']}")]
+    o.append(f'<g class="{p}-i">' + sans(p, 44, 112, "Nikhil", 76, C["ink"], weight="300")
+             + f'<text class="{p}-s" x="236" y="112" font-size="76" font-weight="300" fill="{C["cy"]}">.</text></g>')
+    o.append(f'<g class="{p}-i {p}-d2">'
+             + sheen(p, f'class="{p}-s" x="1156" y="92" text-anchor="end" font-size="24" font-style="italic"',
+                     esc(c["footer_tag"]), C["ink"])
+             + mono(p, 1156, 122, c["footer_meta"], 10.5, C["dim"], 2.4, "end") + "</g>")
+    o.append(f'<path class="{p}-dr" d="M44 148 H1156" stroke="{C["cy"]}" stroke-width=".9" opacity=".6"/>')
+    x = 44
+    for k, v, cw in [("DRAWN BY", "N. C. S. TOKALA", 230), ("SHEET", "06 OF 06", 110), ("REV", "2026.10", 110)]:
+        o.append(f'<g class="{p}-i {p}-d4"><rect x="{x}" y="160" width="{cw}" height="40" fill="{C["panel"]}" '
+                 f'fill-opacity=".5" stroke="{C["grid2"]}"/>'
+                 + mono(p, x + 11, 175, k, 9, C["dim"], 1.6) + mono(p, x + 11, 193, v, 11.5, C["ink"], 0.6) + "</g>")
+        x += cw
+    o.append("</svg>")
+    return "\n".join(o)
 
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     files = {"hero.svg": build_hero(), "about.svg": build_about(), "credentials.svg": build_credentials(),
              "toolkit.svg": build_toolkit(), "footer.svg": build_footer()}
-    for t in CONTENT["titles"]:
-        files[f"title-{t[1].lower().replace(' ', '-')}.svg"] = build_title(*t)
-    for pr in CONTENT["projects"]:
+    for num, kicker, sub in CONTENT["titles"]:
+        files[f"title-{kicker.lower().replace(' ', '-')}.svg"] = build_title(num, kicker, sub)
+    for pr in PROJECTS:
         files[f"{pr['file']}.svg"] = build_project(pr)
     for name, svg in files.items():
         (OUT / name).write_text(svg, encoding="utf-8")
-        print(f"wrote assets/{name} ({len(svg.encode()) / 1024:.1f} KB)")
+        print(f"wrote assets/{name} ({len(svg.encode())/1024:.1f} KB)")
 
 
 if __name__ == "__main__":

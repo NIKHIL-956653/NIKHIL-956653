@@ -1,28 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 230" width="1200" height="230" role="img" aria-label="Nikhil — Building AI that holds up in production.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 220" width="1200" height="220" role="img" aria-label="Nikhil Chandra Sairam Tokala — Building AI that holds up in production.">
 <defs>
-<linearGradient id="foot-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0C1527"/><stop offset="1" stop-color="#070B14"/></linearGradient>
-<radialGradient id="foot-glow" cx="0.1" cy="0.9" r="0.75"><stop offset="0" stop-color="#22D3EE" stop-opacity=".17"/><stop offset=".45" stop-color="#22D3EE" stop-opacity=".04"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
-<pattern id="foot-grid" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#2B4166" opacity=".5"/></pattern>
-<linearGradient id="foot-rule" gradientUnits="userSpaceOnUse" x1="40" y1="0" x2="1160" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset=".55" stop-color="#2B4166"/><stop offset="1" stop-color="#2B4166" stop-opacity="0"/></linearGradient>
-<linearGradient id="foot-sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".95"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
-<radialGradient id="foot-dot"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#67E8F9" stop-opacity=".7"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+<linearGradient id="ft-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A2238"/><stop offset="1" stop-color="#06172A"/></linearGradient>
+<pattern id="ft-g1" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0 V20 M0 20 H20" stroke="#123A5E" stroke-width=".5" opacity=".55"/></pattern>
+<pattern id="ft-g2" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M100 0 V100 M0 100 H100" stroke="#1B4E79" stroke-width=".7" opacity=".5"/></pattern>
+<linearGradient id="ft-sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".9"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
 </defs>
-<rect width="1200" height="230" rx="24" fill="url(#foot-bg)"/>
-<rect width="1200" height="230" rx="24" fill="url(#foot-grid)"/>
-<rect width="1200" height="230" rx="24" fill="url(#foot-glow)"/>
-<rect x=".5" y=".5" width="1199" height="229" rx="23.5" fill="none" stroke="#1E2E4A"/>
 <style>
-.foot-serif{font-family:Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif}.foot-sans{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif}.foot-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
-.foot-in{animation:foot-in 1s cubic-bezier(.16,1,.3,1) both}
-.foot-d1{animation-delay:.12s}.foot-d2{animation-delay:.24s}.foot-d3{animation-delay:.36s}.foot-d4{animation-delay:.48s}.foot-d5{animation-delay:.6s}.foot-d6{animation-delay:.72s}.foot-d7{animation-delay:.84s}.foot-d8{animation-delay:.96s}
-.foot-draw{stroke-dasharray:1400;animation:foot-draw 1.6s cubic-bezier(.65,0,.35,1) .4s both}
-@keyframes foot-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-@keyframes foot-draw{from{stroke-dashoffset:1400}to{stroke-dashoffset:0}}
-.foot-band{animation:foot-band 7s cubic-bezier(.4,0,.6,1) 1.4s infinite}
-@keyframes foot-band{0%{transform:translateX(0)}40%{transform:translateX(1600px)}100%{transform:translateX(1600px)}}
-@media (prefers-reduced-motion:reduce){.foot-in,.foot-draw,.foot-band{animation:none}}
+.ft-m{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}.ft-s{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif}
+.ft-i{animation:ft-i .9s cubic-bezier(.16,1,.3,1) both}
+.ft-d1{animation-delay:.1s}.ft-d2{animation-delay:.2s}.ft-d3{animation-delay:.3s}.ft-d4{animation-delay:.4s}.ft-d5{animation-delay:.5s}.ft-d6{animation-delay:.6s}
+.ft-dr{stroke-dasharray:1200;animation:ft-dr 1.8s cubic-bezier(.65,0,.35,1) .3s both}
+.ft-band{animation:ft-band 8s cubic-bezier(.4,0,.6,1) 1.6s infinite}
+@keyframes ft-i{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes ft-dr{from{stroke-dashoffset:1200}to{stroke-dashoffset:0}}
+@keyframes ft-band{0%{transform:translateX(0)}45%{transform:translateX(1700px)}100%{transform:translateX(1700px)}}
+@media (prefers-reduced-motion:reduce){.ft-i,.ft-dr,.ft-band{animation:none}}
 </style>
-<g class="foot-in"><text class="foot-serif" x="56" y="150" font-size="112" font-weight="300" letter-spacing="-4" fill="#EAF2FF">Nikhil<tspan fill="#22D3EE">.</tspan></text></g>
-<g class="foot-in foot-d2"><text class="foot-serif" x="1144" y="118" text-anchor="end" font-size="27" fill="#EAF2FF"><tspan font-style="italic" fill="#67E8F9">Building AI that holds up in production.</tspan></text><clipPath id="foot-sc2"><text class="foot-serif" x="1144" y="118" text-anchor="end" font-size="27"><tspan font-style="italic">Building AI that holds up in production.</tspan></text></clipPath><g clip-path="url(#foot-sc2)"><rect class="foot-band" x="-360" y="0" width="360" height="100%" fill="url(#foot-sheen)"/></g><text class="foot-mono " x="1144" y="150" font-size="11" letter-spacing="2.6" fill="#5F7394" text-anchor="end">GITHUB.COM/NIKHIL-956653 · DUBAI, UAE</text></g>
-<path class="foot-draw" d="M56 192 H1144" stroke="url(#foot-rule)" stroke-width="1"/><circle cx="56" cy="192" r="7" fill="url(#foot-dot)" opacity="0"><animate attributeName="cx" values="56;1144" dur="6s" begin="2.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".45 0 .55 1"/><animate attributeName="opacity" values="0;1;0" keyTimes="0;.15;1" dur="6s" begin="2.2s" repeatCount="indefinite"/></circle>
+<rect width="1200" height="220" fill="url(#ft-bg)"/>
+<rect width="1200" height="220" fill="url(#ft-g1)"/>
+<rect width="1200" height="220" fill="url(#ft-g2)"/>
+<rect x="8.5" y="8.5" width="1183" height="203" fill="none" stroke="#1B4E79"/>
+<rect x="14.5" y="14.5" width="1171" height="191" fill="none" stroke="#123A5E" stroke-width=".6"/>
+<g class="ft-i"><text class="ft-s" x="44" y="112" font-size="76" fill="#DCEAF8" text-anchor="start" font-weight="300">Nikhil</text><text class="ft-s" x="236" y="112" font-size="76" font-weight="300" fill="#5EEAD4">.</text></g>
+<g class="ft-i ft-d2"><text class="ft-s" x="1156" y="92" text-anchor="end" font-size="24" font-style="italic" fill="#DCEAF8">Building AI that holds up in production.</text><clipPath id="ft-sc2"><text class="ft-s" x="1156" y="92" text-anchor="end" font-size="24" font-style="italic">Building AI that holds up in production.</text></clipPath><g clip-path="url(#ft-sc2)"><rect class="ft-band" x="-380" y="0" width="380" height="100%" fill="url(#ft-sheen)"/></g><text class="ft-m" x="1156" y="122" font-size="10.5" letter-spacing="2.4" fill="#5E809F" text-anchor="end">GITHUB.COM/NIKHIL-956653 · DUBAI, UAE</text></g>
+<path class="ft-dr" d="M44 148 H1156" stroke="#5EEAD4" stroke-width=".9" opacity=".6"/>
+<g class="ft-i ft-d4"><rect x="44" y="160" width="230" height="40" fill="#081D31" fill-opacity=".5" stroke="#1B4E79"/><text class="ft-m" x="55" y="175" font-size="9" letter-spacing="1.6" fill="#5E809F" text-anchor="start">DRAWN BY</text><text class="ft-m" x="55" y="193" font-size="11.5" letter-spacing="0.6" fill="#DCEAF8" text-anchor="start">N. C. S. TOKALA</text></g>
+<g class="ft-i ft-d4"><rect x="274" y="160" width="110" height="40" fill="#081D31" fill-opacity=".5" stroke="#1B4E79"/><text class="ft-m" x="285" y="175" font-size="9" letter-spacing="1.6" fill="#5E809F" text-anchor="start">SHEET</text><text class="ft-m" x="285" y="193" font-size="11.5" letter-spacing="0.6" fill="#DCEAF8" text-anchor="start">06 OF 06</text></g>
+<g class="ft-i ft-d4"><rect x="384" y="160" width="110" height="40" fill="#081D31" fill-opacity=".5" stroke="#1B4E79"/><text class="ft-m" x="395" y="175" font-size="9" letter-spacing="1.6" fill="#5E809F" text-anchor="start">REV</text><text class="ft-m" x="395" y="193" font-size="11.5" letter-spacing="0.6" fill="#DCEAF8" text-anchor="start">2026.10</text></g>
 </svg>
